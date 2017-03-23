@@ -16,9 +16,13 @@ pipeline {
         parallel(
                 "Archive test results": {
                   junit 'target/failsafe-reports/*.xml'
+                  junit 'target/surefire-reports/*.xml'
 
                   archiveArtifacts 'target/failsafe-reports/*.xml'
+                  archiveArtifacts 'target/surefire-reports/*.xml'
+
                   fingerprint 'target/failsafe-reports/*.xml'
+                  fingerprint 'target/surefire-reports/*.xml'
                 },
                 "Archive libs": {
                   archiveArtifacts 'target/*.jar'
