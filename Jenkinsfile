@@ -11,13 +11,13 @@ pipeline {
         parallel(
                 "Build": { sh 'mvn install -DskipTests' },
                 "Archive surefire reports": {
-                  junit 'target/failsafe-reports/*.xml'
+                  junit 'target/failsafe-reports/*.txt'
                   archiveArtifacts 'target/failsafe-reports/*.xml'
                   archiveArtifacts 'target/failsafe-reports/*.txt'
                   fingerprint 'target/failsafe-reports/*.xml'
                 },
                 "Archive failsafe reports": {
-                  junit 'target/surefire-reports/*.xml'
+                  junit 'target/surefire-reports/*.txt'
                   archiveArtifacts 'target/surefire-reports/*.txt'
                   archiveArtifacts 'target/surefire-reports/*.xml'
                   fingerprint 'target/surefire-reports/*.xml'
