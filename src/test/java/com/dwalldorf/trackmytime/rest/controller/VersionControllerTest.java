@@ -2,15 +2,14 @@ package com.dwalldorf.trackmytime.rest.controller;
 
 import static org.junit.Assert.assertTrue;
 
+import com.dwalldorf.trackmytime.BaseTest;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
-public class VersionControllerTest {
+public class VersionControllerTest extends BaseTest {
 
     @Test
-    public void testSomething() throws Exception {
+    public void testDummy() {
+        // TODO: delete me
         assertTrue(true);
     }
 }
