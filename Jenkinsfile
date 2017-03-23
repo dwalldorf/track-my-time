@@ -8,22 +8,24 @@ pipeline {
     }
     stage('Build') {
       steps {
-        sh 'mvn install'
+        parallel(
+                "Build": { sh 'mvn install' },
+                "Archive surefire reports": {
+                  junit 'target/failsafe-reports/*.xml'
+                  archiveArtifacts 'target/failsafe-reports/*.xml'
+                  fingerprint 'target/failsafe-reports/*.xml'
+                },
+                "Archive failsafe reports": {
+                  junit 'target/surefire-reports/*.xml'
+                  archiveArtifacts 'target/surefire-reports/*.xml'
+                  fingerprint 'target/surefire-reports/*.xml'
+                }
+        )
       }
     }
     stage('Artifacts') {
       steps {
         parallel(
-                "Archive test results": {
-                  junit 'target/failsafe-reports/*.xml'
-                  junit 'target/surefire-reports/*.xml'
-
-                  archiveArtifacts 'target/failsafe-reports/*.xml'
-                  archiveArtifacts 'target/surefire-reports/*.xml'
-
-                  fingerprint 'target/failsafe-reports/*.xml'
-                  fingerprint 'target/surefire-reports/*.xml'
-                },
                 "Archive libs": {
                   archiveArtifacts 'target/*.jar'
                   fingerprint 'build/libs/*.jar'
