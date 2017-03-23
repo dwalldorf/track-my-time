@@ -28,7 +28,7 @@ pipeline {
     stage('Artifacts') {
       steps {
         parallel(
-                "Archive libs": {
+                "Archive jar": {
                   archiveArtifacts 'target/*.jar'
                   fingerprint 'build/libs/*.jar'
                 },
