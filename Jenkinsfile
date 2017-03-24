@@ -9,7 +9,10 @@ pipeline {
     stage('Build') {
       steps {
         parallel(
-                "Build": { sh 'mvn install -DskipTests' },
+                "Build": {
+                  sh 'mvn install -DskipTests'
+                  sh 'mvn javadoc:jar'
+                },
                 "Archive surefire reports": {
                   junit 'target/surefire-reports/*.xml'
                   archiveArtifacts 'target/surefire-reports/*.xml'
