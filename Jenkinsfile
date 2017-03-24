@@ -8,7 +8,9 @@ pipeline {
       steps {
         parallel(
                 "Build": {
+                  steps {
                     sh 'mvn install -DskipTests'
+                  }
                 },
                 "Archive surefire reports": {
                   junit 'target/failsafe-reports/*.xml'
