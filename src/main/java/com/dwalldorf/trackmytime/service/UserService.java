@@ -25,19 +25,22 @@ public class UserService {
     @Transactional
     public User register(RegisterForm registerForm) throws InvalidInputException {
         final String username = registerForm.getUsername();
+        final String email = registerForm.getEmail();
 
-        User user = userRepository.findByUsername(username);
-        if (user != null) {
-            throw new InvalidInputException("username or email already in use");
+        if (userRepository.findByUsername(username) != null) {
+            throw new InvalidInputException("username", "username already in use", username);
+        }
+        if (userRepository.findByEmail(email) != null) {
+            throw new InvalidInputException("email", "email already in use", email);
         }
 
+        User user = new User();
         byte[] salt = passwordService.createSalt();
-        user = new User()
-                .setUsername(username)
-                .setEmail(registerForm.getEmail())
-                .setRegistration(new DateTime())
-                .setSalt(salt)
-                .setHashedPassword(passwordService.hash(registerForm.getPassword().toCharArray(), salt));
+        user.setUsername(username)
+            .setEmail(email)
+            .setRegistration(new DateTime())
+            .setSalt(salt)
+            .setHashedPassword(passwordService.hash(registerForm.getPassword().toCharArray(), salt));
         //noinspection UnusedAssignment
         salt = null;
 

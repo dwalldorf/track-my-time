@@ -7,15 +7,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class RegisterForm implements Serializable {
 
-    @NotEmpty
-    @Size(min = 5, max = 40)
+    @Size(min = 3, max = 40, message = "length must be between 3 and 40 characters")
     private String username;
 
-    @NotEmpty
-    @Email
+    @NotEmpty(message = "email is mandatory")
+    @Email(message = "not a valid email")
     private String email;
 
-    @NotEmpty
+    @Size(min = 6, message = "please use at least 6 characters")
     private String password;
 
     public String getUsername() {

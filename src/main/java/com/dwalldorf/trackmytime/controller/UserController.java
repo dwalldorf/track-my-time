@@ -50,8 +50,9 @@ public class UserController {
         try {
             userService.register(registerForm);
         } catch (InvalidInputException e) {
-            ObjectError fieldError = new ObjectError("registerForm", e.getMessage());
-            bindingResult.addError(fieldError);
+            ObjectError objectError = e.toFormError(bindingResult.getObjectName());
+            bindingResult.addError(objectError);
+
             return registerPage(registerForm);
         }
 
