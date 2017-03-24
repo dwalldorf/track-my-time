@@ -9,7 +9,7 @@ import org.mongodb.morphia.annotations.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection = "users")
 public class User implements Serializable {
 
     @Id
@@ -22,6 +22,8 @@ public class User implements Serializable {
 
     @Email
     private String email;
+
+    private String password;
 
     @NotEmpty
     private byte[] hashedPassword;
@@ -62,6 +64,15 @@ public class User implements Serializable {
 
     public User setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public User setPassword(String password) {
+        this.password = password;
         return this;
     }
 

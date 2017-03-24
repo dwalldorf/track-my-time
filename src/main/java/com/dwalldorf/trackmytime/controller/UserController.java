@@ -1,7 +1,6 @@
 package com.dwalldorf.trackmytime.controller;
 
 import com.dwalldorf.trackmytime.exception.InvalidInputException;
-import com.dwalldorf.trackmytime.forms.user.LoginForm;
 import com.dwalldorf.trackmytime.forms.user.RegisterForm;
 import com.dwalldorf.trackmytime.service.UserService;
 import javax.inject.Inject;
@@ -21,19 +20,6 @@ public class UserController {
     @Inject
     public UserController(UserService userService) {
         this.userService = userService;
-    }
-
-    @GetMapping("/login")
-    public String loginPage(@ModelAttribute LoginForm loginForm) {
-        return "user/login";
-    }
-
-    @PostMapping("/login")
-    public String login(@ModelAttribute @Valid LoginForm loginForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return loginPage(loginForm);
-        }
-        return "redirect:/";
     }
 
     @GetMapping("/register")
