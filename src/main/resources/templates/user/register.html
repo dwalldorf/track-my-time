@@ -7,15 +7,20 @@
 <header th:replace="layout::site-header"></header>
 
 <h1>Register</h1>
-<form th:action="@{/register}" th:object="${loginForm}" method="post">
+<form th:action="@{/register}" th:object="${registerForm}" method="post">
     <div>
-        <label for="username">User Name:</label>
+        <label for="username">Username:</label>
         <input type="text"
                id="username"
                name="username"
                placeholder="Username"/>
-        <span class="formError" th:if="${#fields.hasErrors('username')}"
-              th:errors="*{username}">Invalid username</span>
+    </div>
+    <div>
+        <label for="email">E-Mail:</label>
+        <input type="email"
+               id="email"
+               name="email"
+               placeholder="address@host.tld"/>
     </div>
     <div>
         <label>Password:</label>
@@ -25,7 +30,7 @@
                placeholder="*****"/>
     </div>
     <div>
-        <input type="submit" value="Register"/>
+        <input type="submit" value="Login"/>
     </div>
 </form>
 

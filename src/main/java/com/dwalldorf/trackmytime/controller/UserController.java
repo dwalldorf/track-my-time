@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid LoginForm loginForm, BindingResult bindingResult) {
+    public String login(@ModelAttribute @Valid LoginForm loginForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return loginPage();
         }
@@ -39,10 +40,11 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid RegisterForm registerForm, BindingResult bindingResult) {
+    public String register(@ModelAttribute @Valid RegisterForm registerForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return registerPage();
         }
+        userService.register(registerForm);
         return "redirect:/login";
     }
 }

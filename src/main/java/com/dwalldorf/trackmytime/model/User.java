@@ -42,71 +42,80 @@ public class User implements Serializable {
         return id;
     }
 
-    public void setId(String id) {
+    public User setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public User setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public byte[] getHashedPassword() {
         return hashedPassword;
     }
 
-    public void setHashedPassword(byte[] hashedPassword) {
+    public User setHashedPassword(byte[] hashedPassword) {
         this.hashedPassword = hashedPassword;
+        return this;
     }
 
     public byte[] getSalt() {
         return salt;
     }
 
-    public void setSalt(byte[] salt) {
+    public User setSalt(byte[] salt) {
         this.salt = salt;
+        return this;
     }
 
     public DateTime getRegistration() {
         return registration;
     }
 
-    public void setRegistration(DateTime registration) {
+    public User setRegistration(DateTime registration) {
         this.registration = registration;
+        return this;
     }
 
     public DateTime getFirstLogin() {
         return firstLogin;
     }
 
-    public void setFirstLogin(DateTime firstLogin) {
+    public User setFirstLogin(DateTime firstLogin) {
         this.firstLogin = firstLogin;
+        return this;
     }
 
     public DateTime getLastLogin() {
         return lastLogin;
     }
 
-    public void setLastLogin(DateTime lastLogin) {
+    public User setLastLogin(DateTime lastLogin) {
         this.lastLogin = lastLogin;
+        return this;
     }
 
     public Boolean getConfirmedEmail() {
         return confirmedEmail;
     }
 
-    public void setConfirmedEmail(Boolean confirmedEmail) {
+    public User setConfirmedEmail(Boolean confirmedEmail) {
         this.confirmedEmail = confirmedEmail;
+        return this;
     }
 }
