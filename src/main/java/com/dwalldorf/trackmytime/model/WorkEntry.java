@@ -10,11 +10,34 @@ public class WorkEntry implements Serializable {
     @Id
     private String id;
 
+    private String projectId;
+
+    private String customerId;
+
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public WorkEntry setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public WorkEntry setProjectId(String projectId) {
+        this.projectId = projectId;
+        return this;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public WorkEntry setCustomerId(String customerId) {
+        this.customerId = customerId;
+        return this;
     }
 }
