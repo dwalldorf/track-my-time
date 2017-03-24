@@ -9,8 +9,10 @@ pipeline {
     stage('Build') {
       steps {
         parallel(
-                "Build": {
+                "Build jar": {
                   sh 'mvn install -DskipTests'
+                },
+                "Build javadoc": {
                   sh 'mvn javadoc:jar'
                 },
                 "Archive surefire reports": {
