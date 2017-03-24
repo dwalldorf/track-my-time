@@ -2,8 +2,10 @@ pipeline {
   agent any
   stages {
     stage('Test') {
-      steps {
-        sh 'mvn clean verify'
+      timeout(1) {
+        steps {
+          sh 'mvn clean verify'
+        }
       }
     }
     stage('Build') {
