@@ -12,10 +12,7 @@ pipeline {
                 "Build": { sh 'mvn install -DskipTests' },
                 "Archive surefire reports": {
                   junit 'target/surefire-reports/*.xml'
-
                   archiveArtifacts 'target/surefire-reports/*.xml'
-                  archiveArtifacts 'target/surefire-reports/*.txt'
-
                   fingerprint 'target/surefire-reports/*.xml'
                 }
         )
