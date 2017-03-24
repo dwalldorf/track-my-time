@@ -28,7 +28,7 @@ pipeline {
         parallel(
                 "Archive jars": {
                   archiveArtifacts 'target/*.jar'
-                  fingerprint 'build/libs/*.jar'
+                  fingerprint 'target/*.jar'
                 },
                 "Archive pom": {
                   archiveArtifacts 'pom.xml'
