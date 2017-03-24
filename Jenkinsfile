@@ -9,11 +9,7 @@ pipeline {
     stage('Build') {
       steps {
         parallel(
-                "Build": {
-                  timeout(1) {
-                    sh 'mvn install -DskipTests'
-                  }
-                },
+                "Build": { sh 'mvn install -DskipTests' },
                 "Archive surefire reports": {
                   junit 'target/failsafe-reports/*.xml'
                   archiveArtifacts 'target/failsafe-reports/*.xml'
