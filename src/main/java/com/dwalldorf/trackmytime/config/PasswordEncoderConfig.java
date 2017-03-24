@@ -8,6 +8,10 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 @Configuration
 public class PasswordEncoderConfig {
 
+    /**
+     * Use Pbkdf2PasswordEncoder
+     * @return Pbkdf2PasswordEncoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new Pbkdf2PasswordEncoder();
