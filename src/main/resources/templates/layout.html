@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="html-head">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Track my time!</title>
+
+    <meta th:include="this::head" th:remove="tag"/>
+</head>
+<body>
+<header th:fragment="site-header">
+    <h2>Track my time</h2>
+</header>
+
+<section th:fragment="site-content"></section>
+
+<footer th:fragment="site-footer">
+    copyright Daniel Walldorf 2017
+</footer>
+</body>
+</html>

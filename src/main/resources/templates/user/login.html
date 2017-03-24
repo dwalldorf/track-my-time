@@ -1,10 +1,36 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:include="layout::html-head">
     <title>Track my time!</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Login</h1>
+<header th:replace="layout::site-header"></header>
+
+<h1>Register</h1>
+<form th:action="@{/login}" th:object="${loginForm}" method="post">
+    <div>
+        <label for="username">User Name:</label>
+        <input type="text"
+               id="username"
+               name="username"
+               placeholder="Username"/>
+        <span class="formError" th:if="${#fields.hasErrors('username')}"
+              th:errors="*{username}">Invalid username</span>
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password"
+               id="password"
+               name="password"
+               placeholder="*****"/>
+        <span class="formError" th:if="${#fields.hasErrors('username')}"
+              th:errors="*{username}">Invalid username</span>
+    </div>
+    <div>
+        <input type="submit" value="Register"/>
+    </div>
+</form>
+
+<footer th:replace="layout::site-footer"></footer>
 </body>
 </html>
