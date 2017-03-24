@@ -25,22 +25,25 @@ pipeline {
         )
       }
     }
-    stage('Artifacts') {
-      steps {
-        parallel(
-                "Archive jar": {
-                  archiveArtifacts 'target/*.jar'
-                  fingerprint 'build/libs/*.jar'
-                },
-                "Archive pom": {
-                  archiveArtifacts 'pom.xml'
-                  fingerprint 'pom.xml'
-                },
-                "Archive Jenkinsfile": {
-                  archiveArtifacts 'Jenkinsfile'
-                  fingerprint 'Jenkinsfile'
-                }
-        )
+
+    if (env.BRANCH_NAME == "master") {
+      stage('Artifacts') {
+        steps {
+          parallel(
+                  "Archive jar": {
+                    archiveArtifacts 'target/*.jar'
+                    fingerprint 'build/libs/*.jar'
+                  },
+                  "Archive pom": {
+                    archiveArtifacts 'pom.xml'
+                    fingerprint 'pom.xml'
+                  },
+                  "Archive Jenkinsfile": {
+                    archiveArtifacts 'Jenkinsfile'
+                    fingerprint 'Jenkinsfile'
+                  }
+          )
+        }
       }
     }
   }
