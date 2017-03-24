@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout::html-head">
+    <title>Track my time!</title>
+</head>
+<body>
+<header th:replace="layout::site-header"></header>
+
+<h1>Login</h1>
+<form th:action="@{/login}" th:object="${loginForm}" method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text"
+               id="username"
+               name="username"
+               placeholder="Username"/>
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password"
+               id="password"
+               name="password"
+               placeholder="*****"/>
+    </div>
+    <div>
+        <input type="submit" value="Register"/>
+    </div>
+</form>
+
+<footer th:replace="layout::site-footer"></footer>
+</body>
+</html>
