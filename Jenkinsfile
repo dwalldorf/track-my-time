@@ -9,7 +9,12 @@ pipeline {
     stage('Build') {
       steps {
         parallel(
-                "Build": { sh 'mvn install -DskipTests' },
+                "Build jar": {
+                  sh 'mvn install -DskipTests'
+                },
+                "Build javadoc": {
+                  sh 'mvn javadoc:jar'
+                },
                 "Archive surefire reports": {
                   junit 'target/surefire-reports/*.xml'
                   archiveArtifacts 'target/surefire-reports/*.xml'
@@ -21,9 +26,9 @@ pipeline {
     stage('Artifacts') {
       steps {
         parallel(
-                "Archive jar": {
+                "Archive jars": {
                   archiveArtifacts 'target/*.jar'
-                  fingerprint 'build/libs/*.jar'
+                  fingerprint 'target/*.jar'
                 },
                 "Archive pom": {
                   archiveArtifacts 'pom.xml'

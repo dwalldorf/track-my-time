@@ -17,6 +17,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.authenticationProvider = authenticationProvider;
     }
 
+    /**
+     * Configure access to parts of the application
+     *
+     * @param http HttpSecurity
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -28,6 +34,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logout().permitAll();
     }
 
+    /**
+     * Use {@link AuthProviderConfig#authenticationProvider()} <code>AuthenticationProvider</code>.
+     *
+     * @param auth AuthenticationManagerBuilder
+     * @throws Exception
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider);

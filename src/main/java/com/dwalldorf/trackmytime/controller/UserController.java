@@ -1,6 +1,6 @@
 package com.dwalldorf.trackmytime.controller;
 
-import com.dwalldorf.trackmytime.exception.InvalidInputException;
+import com.dwalldorf.trackmytime.exception.InvalidFormInputException;
 import com.dwalldorf.trackmytime.forms.user.RegisterForm;
 import com.dwalldorf.trackmytime.service.UserService;
 import javax.inject.Inject;
@@ -35,7 +35,7 @@ public class UserController {
 
         try {
             userService.register(registerForm);
-        } catch (InvalidInputException e) {
+        } catch (InvalidFormInputException e) {
             ObjectError objectError = e.toFormError(bindingResult.getObjectName());
             bindingResult.addError(objectError);
 

@@ -1,6 +1,6 @@
 package com.dwalldorf.trackmytime.service;
 
-import com.dwalldorf.trackmytime.exception.InvalidInputException;
+import com.dwalldorf.trackmytime.exception.InvalidFormInputException;
 import com.dwalldorf.trackmytime.forms.user.RegisterForm;
 import com.dwalldorf.trackmytime.model.User;
 import com.dwalldorf.trackmytime.repository.UserRepository;
@@ -28,16 +28,23 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Creates a user. Will encode the password and set registration date.
+     *
+     * @param registerForm user data
+     * @return persisted user
+     * @throws InvalidFormInputException in case of validation error
+     */
     @Transactional
-    public User register(RegisterForm registerForm) throws InvalidInputException {
+    public User register(RegisterForm registerForm) throws InvalidFormInputException {
         final String username = registerForm.getUsername();
         final String email = registerForm.getEmail();
 
         if (userRepository.findByUsername(username) != null) {
-            throw new InvalidInputException("username", "username already in use", username);
+            throw new InvalidFormInputException("username", "username already in use", username);
         }
         if (userRepository.findByEmail(email) != null) {
-            throw new InvalidInputException("email", "email already in use", email);
+            throw new InvalidFormInputException("email", "email already in use", email);
         }
 
         User user = new User()

@@ -20,6 +20,11 @@ public class AuthProviderConfig {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Use {@link UserService} and {@link PasswordEncoderConfig#passwordEncoder()} for authentication.
+     *
+     * @return DaoAuthenticationProvider
+     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
