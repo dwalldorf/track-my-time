@@ -18,15 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService implements UserDetailsService {
 
-    private final PasswordService passwordService;
-
     private final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
 
     @Inject
-    public UserService(PasswordService passwordService, PasswordEncoder passwordEncoder, UserRepository userRepository) {
-        this.passwordService = passwordService;
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
@@ -43,17 +40,11 @@ public class UserService implements UserDetailsService {
             throw new InvalidInputException("email", "email already in use", email);
         }
 
-        User user = new User();
-        byte[] salt = passwordService.createSalt();
-        user.setUsername(username)
-            .setEmail(email)
-            .setRegistration(new DateTime())
-            .setSalt(salt)
-            .setHashedPassword(passwordService.hash(registerForm.getPassword().toCharArray(), salt))
-            .setPassword(passwordEncoder.encode(registerForm.getPassword()));
-        //noinspection UnusedAssignment
-        salt = null;
-
+        User user = new User()
+                .setUsername(username)
+                .setEmail(email)
+                .setRegistration(new DateTime())
+                .setPassword(passwordEncoder.encode(registerForm.getPassword()));
         return userRepository.save(user);
     }
 
