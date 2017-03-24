@@ -28,6 +28,13 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Creates a user. Will encode the password and set registration date.
+     *
+     * @param registerForm user data
+     * @return persisted user
+     * @throws InvalidFormInputException in case of validation error
+     */
     @Transactional
     public User register(RegisterForm registerForm) throws InvalidFormInputException {
         final String username = registerForm.getUsername();
