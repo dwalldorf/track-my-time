@@ -3,9 +3,7 @@ pipeline {
   stages {
     stage('Test') {
       timeout(1) {
-        steps {
-          sh 'mvn clean verify'
-        }
+        sh 'mvn clean verify'
       }
     }
     stage('Build') {
