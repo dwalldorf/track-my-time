@@ -2,16 +2,14 @@ pipeline {
   agent any
   stages {
     stage('Test') {
-      sh 'mvn clean verify'
+      steps {
+        sh 'mvn clean verify'
+      }
     }
     stage('Build') {
       steps {
         parallel(
-                "Build": {
-                  steps {
-                    sh 'mvn install -DskipTests'
-                  }
-                },
+                "Build": { sh 'mvn install -DskipTests' },
                 "Archive surefire reports": {
                   junit 'target/failsafe-reports/*.xml'
                   archiveArtifacts 'target/failsafe-reports/*.xml'
