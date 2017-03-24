@@ -79,6 +79,15 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <spring-profile>dev</spring-profile>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <resources>
             <resource>
