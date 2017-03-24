@@ -16,20 +16,16 @@ public class User implements Serializable {
     private String id;
 
     @NotEmpty
-    @Size(min = 5, max = 40)
+    @Size(min = 3, max = 40)
     @Indexed(unique = true)
     private String username;
 
     @Email
+    @NotEmpty
     private String email;
 
+    @NotEmpty
     private String password;
-
-    @NotEmpty
-    private byte[] hashedPassword;
-
-    @NotEmpty
-    private byte[] salt;
 
     @NotEmpty
     private DateTime registration;
@@ -73,24 +69,6 @@ public class User implements Serializable {
 
     public User setPassword(String password) {
         this.password = password;
-        return this;
-    }
-
-    public byte[] getHashedPassword() {
-        return hashedPassword;
-    }
-
-    public User setHashedPassword(byte[] hashedPassword) {
-        this.hashedPassword = hashedPassword;
-        return this;
-    }
-
-    public byte[] getSalt() {
-        return salt;
-    }
-
-    public User setSalt(byte[] salt) {
-        this.salt = salt;
         return this;
     }
 
