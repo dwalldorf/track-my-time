@@ -15,7 +15,6 @@ pipeline {
                   archiveArtifacts 'target/failsafe-reports/*.xml'
                   archiveArtifacts 'target/failsafe-reports/*.txt'
                   fingerprint 'target/failsafe-reports/*.xml'
-                }ngerprint 'target/surefire-reports/*.xml'
                 }
         )
       }
