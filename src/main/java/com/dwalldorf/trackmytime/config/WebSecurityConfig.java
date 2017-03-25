@@ -10,6 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String[] PUBLIC_ROUTES = {
+            "/login",
+            "/register",
+
+            "/css/**",
+            "/vendor/**"
+    };
+
     private final DaoAuthenticationProvider authenticationProvider;
 
     @Inject
@@ -26,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/login", "/register", "/vendor/**").permitAll()
+            .antMatchers(PUBLIC_ROUTES).permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin().loginPage("/login")

@@ -1,28 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:fragment="html-head">
+<head th:fragment="html-head(title)">
     <meta charset="UTF-8"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" href="../static/css/layout.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/test.css}" href="../static/vendor/test.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
+          href="../static/vendor/bootstrap/css/bootstrap.min.css"/>
 
-    <title>Track my time!</title>
+    <title th:inline="text">Track my time! - [[${title}]]</title>
 
     <meta th:include="this::head" th:remove="tag"/>
 </head>
 <body>
 <header th:fragment="site-header" id="site-header">
-    <h2>Track my time</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-2">
+                <h2>Track my time</h2>
+            </div>
+            <div class="col-xs-10">
+
+            </div>
+        </div>
+    </div>
 
     <div sec:authorize="isAuthenticated()">
         Logged in as <span sec:authentication="name"></span>
     </div>
+    <div sec:authorize="!isAuthenticated()">
+        Not logged in
+    </div>
 </header>
 
-<section th:fragment="site-content"></section>
-
-<footer th:fragment="site-footer">
+<footer th:fragment="site-footer" id="site-footer">
     copyright Daniel Walldorf 2017
 </footer>
 </body>
