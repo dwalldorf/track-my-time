@@ -10,8 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String LOGIN_URL = "/login";
     private static final String[] PUBLIC_ROUTES = {
-            "/login",
+            LOGIN_URL,
             "/register",
 
             "/css/**",
@@ -37,9 +38,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(PUBLIC_ROUTES).permitAll()
             .anyRequest().authenticated()
             .and()
-            .formLogin().loginPage("/login")
+            .formLogin().loginPage(LOGIN_URL)
             .and()
-            .logout().permitAll();
+            .logout()
+            .logoutUrl("/logout")
+            .logoutSuccessUrl(LOGIN_URL)
+            .permitAll();
     }
 
     /**
