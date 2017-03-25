@@ -4,9 +4,9 @@
 <head th:fragment="html-head(title)">
     <meta charset="UTF-8"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" href="../static/css/layout.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendor/test.css}" href="../static/vendor/test.css"/>
     <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
           href="../static/vendor/bootstrap/css/bootstrap.min.css"/>
 
@@ -22,7 +22,15 @@
                 <h2>Track my time</h2>
             </div>
             <div class="col-xs-10">
+                <ul class="nav nav-tabs" sec:authorize="isAuthenticated()">
+                    <li role="presentation"><a th:href="@{/home}">Home</a></li>
+                    <li role="presentation"><a th:href="@{/logout}">Logout</a></li>
+                </ul>
 
+                <ul class="nav nav-tabs" sec:authorize="!isAuthenticated()">
+                    <li role="presentation"><a th:href="@{/login}">Login</a></li>
+                    <li role="presentation"><a th:href="@{/register}">Register</a></li>
+                </ul>
             </div>
         </div>
     </div>
@@ -37,6 +45,9 @@
 
 <footer th:fragment="site-footer" id="site-footer">
     copyright Daniel Walldorf 2017
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"
+            type="text/javascript"
+            src="../static/vendor/bootstrap/js/bootstrap.min.js"></script>
 </footer>
 </body>
 </html>
