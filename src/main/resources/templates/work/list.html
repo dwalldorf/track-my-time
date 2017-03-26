@@ -11,6 +11,7 @@
 
             <table th:unless="${#lists.isEmpty(allEntries)}" class="table table-striped table-hover">
                 <thead>
+                <th>Actions</th>
                 <th>Customer</th>
                 <th>Project</th>
                 <th>Comment</th>
@@ -18,8 +19,16 @@
                 <tbody>
                 <tr th:each="entry:${allEntries}">
                     <td>
+                        <a th:href="@{/work/{id}/edit(id=${entry.id})}" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a th:href="@{/work/{id}/delete(id=${entry.id})}" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                    <td>
                         <span th:unless="${#strings.isEmpty(entry.customerId)}"
-                        th:text="${@customerService.findById(entry.customerId).getName()}">
+                              th:text="${@customerService.findById(entry.customerId).getName()}">
                         </span>
                     </td>
                     <td>
