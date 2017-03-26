@@ -26,8 +26,8 @@ public class WorkController {
 
     public static final String URI_WORK_ADD = URI_WORK_PREFIX + "/add";
     public static final String URI_WORK_LIST = URI_WORK_PREFIX + "/list";
-    public static final String URI_WORK_EDIT = URI_WORK_PREFIX + "/edit";
-    public static final String URI_WORK_DELETE = URI_WORK_PREFIX + "/delete";
+    public static final String URI_WORK_EDIT = URI_WORK_PREFIX + "/{id}/edit";
+    public static final String URI_WORK_DELETE = URI_WORK_PREFIX + "/{id}/delete";
 
     private final UserService userService;
 
@@ -64,23 +64,15 @@ public class WorkController {
         return projectService.findAllByUser(userService.getCurrentUserId());
     }
 
-    @GetMapping(URI_WORK_ADD)
-    public String addPage(@ModelAttribute("workEntry") WorkEntry workEntry) {
-        workEntry.setUserId(userService.getCurrentUserId());
-        return "work/edit";
-    }
-
     @GetMapping(URI_WORK_LIST)
     public String listPage() {
         return "work/list";
     }
 
-    @PostMapping(URI_WORK_PREFIX)
-    public String add(@ModelAttribute @Valid WorkEntry workEntry) {
+    @GetMapping(URI_WORK_ADD)
+    public String addPage(@ModelAttribute("workEntry") WorkEntry workEntry) {
         workEntry.setUserId(userService.getCurrentUserId());
-
-        workEntryService.save(workEntry);
-        return RouteUtil.redirectString(URI_WORK_LIST);
+        return "work/edit";
     }
 
     @GetMapping(URI_WORK_EDIT)
