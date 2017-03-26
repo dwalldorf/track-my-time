@@ -16,9 +16,17 @@
                 <th>Comment</th>
                 </thead>
                 <tbody>
-                <tr th:each="entry : ${allEntries}">
-                    <td th:text="${entry.customerId}"></td>
-                    <td th:text="${entry.projectId}"></td>
+                <tr th:each="entry:${allEntries}">
+                    <td>
+                        <span th:unless="${#strings.isEmpty(entry.customerId)}"
+                        th:text="${@customerService.findById(entry.customerId).getName()}">
+                        </span>
+                    </td>
+                    <td>
+                        <span th:unless="${#strings.isEmpty(entry.projectId)}"
+                              th:text="${@projectService.findById(entry.projectId).getName()}">
+                        </span>
+                    </td>
                     <td th:text="${entry.comment}"></td>
                 </tr>
                 </tbody>

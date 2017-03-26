@@ -16,7 +16,15 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
+    public Customer findById(String id) {
+        return customerRepository.findOne(id);
+    }
+
     public List<Customer> findAllByUser(String userId) {
         return customerRepository.findByUserId(userId);
+    }
+
+    public void save(Customer customer) {
+        customerRepository.save(customer);
     }
 }

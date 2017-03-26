@@ -1,6 +1,5 @@
 package com.dwalldorf.trackmytime.controller;
 
-import com.dwalldorf.trackmytime.forms.user.WorkEntryForm;
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.model.Project;
 import com.dwalldorf.trackmytime.model.WorkEntry;
@@ -8,6 +7,7 @@ import com.dwalldorf.trackmytime.service.CustomerService;
 import com.dwalldorf.trackmytime.service.ProjectService;
 import com.dwalldorf.trackmytime.service.UserService;
 import com.dwalldorf.trackmytime.service.WorkEntryService;
+import com.dwalldorf.trackmytime.util.RouteUtil;
 import java.util.List;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -15,11 +15,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/work")
 public class WorkController {
+
+    private static final String URI_WORK_PREFIX = "/work";
+
+    public static final String URI_WORK_ADD = URI_WORK_PREFIX + "/add";
+    public static final String URI_WORK_LIST = URI_WORK_PREFIX + "/list";
 
     private final UserService userService;
 
@@ -56,29 +59,22 @@ public class WorkController {
         return projectService.findAllByUser(userService.getCurrentUserId());
     }
 
-    @GetMapping("/add")
-    public String addPage(@ModelAttribute("workEntryForm") WorkEntryForm workEntryForm) {
-        workEntryForm = new WorkEntryForm();
-        workEntryForm.setCustomer("Springer Nature");
-        workEntryForm.setComment("test");
+    @GetMapping(URI_WORK_ADD)
+    public String addPage(@ModelAttribute("workEntry") WorkEntry workEntry) {
+        workEntry.setUserId(userService.getCurrentUserId());
         return "work/edit";
     }
 
-    @GetMapping("/list")
+    @GetMapping(URI_WORK_LIST)
     public String listPage() {
         return "work/list";
     }
 
-    @PostMapping
-    public String add(@ModelAttribute @Valid WorkEntryForm workEntryForm) {
-        WorkEntry workEntry = new WorkEntry()
-                .setCustomerId(null)
-                .setProjectId(null)
-                .setComment(workEntryForm.getComment())
-                .setStart(workEntryForm.getStart())
-                .setStop(workEntryForm.getStop());
+    @PostMapping(URI_WORK_PREFIX)
+    public String add(@ModelAttribute @Valid WorkEntry workEntry) {
+        workEntry.setUserId(userService.getCurrentUserId());
 
         workEntryService.save(workEntry);
-        return listPage();
+        return RouteUtil.redirectString(URI_WORK_LIST);
     }
 }
