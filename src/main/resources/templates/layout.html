@@ -21,7 +21,8 @@
             <div class="col-xs-10">
                 <ul class="nav nav-tabs" sec:authorize="isAuthenticated()">
                     <li role="presentation"><a th:href="@{/home}">Home</a></li>
-                    <li role="presentation"><a th:href="@{/work/add}">Add Work entry</a></li>
+                    <li role="presentation"><a th:href="@{/work/list}">All Work Entries</a></li>
+                    <li role="presentation"><a th:href="@{/work/add}">Add Work Entry</a></li>
                 </ul>
 
                 <ul class="nav nav-tabs" sec:authorize="!isAuthenticated()">

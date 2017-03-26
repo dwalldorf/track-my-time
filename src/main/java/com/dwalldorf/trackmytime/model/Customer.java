@@ -10,6 +10,8 @@ public class Customer implements Serializable {
     @Id
     private String id;
 
+    private String userId;
+
     private String name;
 
     public String getId() {
@@ -18,6 +20,15 @@ public class Customer implements Serializable {
 
     public Customer setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public Customer setUserId(String userId) {
+        this.userId = userId;
         return this;
     }
 

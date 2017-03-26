@@ -8,6 +8,8 @@ public class Project implements Serializable {
 
     private String id;
 
+    private String userId;
+
     private String name;
 
     public String getId() {
@@ -16,6 +18,15 @@ public class Project implements Serializable {
 
     public Project setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public Project setUserId(String userId) {
+        this.userId = userId;
         return this;
     }
 

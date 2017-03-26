@@ -7,13 +7,26 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-offset-2 col-xs-8">
-            <form th:action="@{/work/saveWorkEntry}" th:object="${workEntry}" th:method="post" class="form-horizontal">
+            <form th:action="@{/work}" th:object="${workEntryForm}" th:method="post" class="form-horizontal">
                 <input type="hidden" th:if="workEntry.id"/>
 
                 <div class="form-group">
                     <label for="customer" class="col-xs-2 control-label">Customer:</label>
                     <div class="col-xs-10">
-                        <input type="text" class="form-control" name="customer" id="customer" placeholder="Customer"/>
+                        <!--<input type="text"-->
+                        <!--th:field="*{customer}"-->
+                        <!--class="form-control"-->
+                        <!--name="customer"-->
+                        <!--id="customer"-->
+                        <!--placeholder="Customer"/>-->
+                        <select th:field="*{customer}"
+                                name="customer"
+                                id="customer"
+                                class="form-control">
+                            <option th:each="customer : ${allCustomers}"
+                                    th:value="${customer.id}"
+                                    th:text="${customer.name}"></option>
+                        </select>
                     </div>
                 </div>
 
