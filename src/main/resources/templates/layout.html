@@ -6,9 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" href="../static/css/layout.css"/>
     <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
           href="../static/vendor/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" href="../static/css/layout.css"/>
 
     <title th:inline="text">Track my time! - [[${title}]]</title>
 
@@ -35,6 +35,20 @@
                             <li role="presentation"><a th:href="@{/work/add}">Work Entry</a></li>
                             <li role="presentation"><a th:href="@{/work/customer/add}">Customer</a></li>
                             <li role="presentation"><a th:href="@{/work/project/add}">Project</a></li>
+                        </ul>
+                    </li>
+                    <li role="presentation">
+                        <a class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           href="#"
+                           role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+                            Manage <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation"><a th:href="@{/work/customer/list}">Customers</a></li>
+                            <li role="presentation"><a th:href="@{/work/project/list}">Projects</a></li>
                         </ul>
                     </li>
                 </ul>
