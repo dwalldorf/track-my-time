@@ -16,7 +16,7 @@
                        name="id"
                        th:value="${customer.id}"/>
                 <input type="hidden"
-                       th:if="${!#strings.isEmpty(customer.id)}"
+                       th:if="${!#strings.isEmpty(customer.userId)}"
                        name="userId"
                        th:value="${customer.userId}"/>
 
