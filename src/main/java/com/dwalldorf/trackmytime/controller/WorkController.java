@@ -4,6 +4,8 @@ import com.dwalldorf.trackmytime.forms.user.WorkEntryForm;
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.model.Project;
 import com.dwalldorf.trackmytime.model.WorkEntry;
+import com.dwalldorf.trackmytime.service.CustomerService;
+import com.dwalldorf.trackmytime.service.ProjectService;
 import com.dwalldorf.trackmytime.service.UserService;
 import com.dwalldorf.trackmytime.service.WorkEntryService;
 import java.util.List;
@@ -23,10 +25,20 @@ public class WorkController {
 
     private final WorkEntryService workEntryService;
 
+    private final CustomerService customerService;
+
+    private final ProjectService projectService;
+
     @Inject
-    public WorkController(UserService userService, WorkEntryService workEntryService) {
+    public WorkController(
+            UserService userService,
+            WorkEntryService workEntryService,
+            CustomerService customerService,
+            ProjectService projectService) {
         this.userService = userService;
         this.workEntryService = workEntryService;
+        this.customerService = customerService;
+        this.projectService = projectService;
     }
 
     @ModelAttribute("allEntries")
@@ -36,12 +48,12 @@ public class WorkController {
 
     @ModelAttribute("allCustomers")
     public List<Customer> allCustomers() {
-        return workEntryService.findAllCustomersByUser(userService.getCurrentUserId());
+        return customerService.findAllByUser(userService.getCurrentUserId());
     }
 
     @ModelAttribute("allProjects")
     public List<Project> allProjects() {
-        return workEntryService.findAllProjectsByUser(userService.getCurrentUserId());
+        return projectService.findAllByUser(userService.getCurrentUserId());
     }
 
     @GetMapping("/add")

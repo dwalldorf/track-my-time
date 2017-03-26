@@ -1,6 +1,5 @@
 package com.dwalldorf.trackmytime.service;
 
-import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.model.Project;
 import com.dwalldorf.trackmytime.model.WorkEntry;
 import com.dwalldorf.trackmytime.repository.CustomerRepository;
@@ -32,10 +31,6 @@ public class WorkEntryService {
 
     public List<WorkEntry> findAllByUser(String userId) {
         return workEntryRepository.findAllByUserId(userId);
-    }
-
-    public List<Customer> findAllCustomersByUser(String userId) {
-        return customerRepository.findByUserId(userId);
     }
 
     public List<Project> findAllProjectsByUser(String userId) {
