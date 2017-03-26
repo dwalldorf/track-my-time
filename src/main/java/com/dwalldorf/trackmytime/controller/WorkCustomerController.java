@@ -23,7 +23,8 @@ public class WorkCustomerController {
 
     private static final String URI_CUSTOMER_LIST = URI_PREFIX + "/list";
     private static final String URI_CUSTOMER_ADD = URI_PREFIX + "/add";
-    private static final String URI_CUSTOMER_EDIT = URI_PREFIX + "/edit/{id}";
+    private static final String URI_CUSTOMER_EDIT = URI_PREFIX + "/{id}/edit";
+    private static final String URI_CUSTOMER_DELETE = URI_PREFIX + "/{id}/delete";
 
     private final static String VIEW_PREFIX = "/work/customer/";
     private final static String VIEW_EDIT = VIEW_PREFIX + "edit";
@@ -74,5 +75,17 @@ public class WorkCustomerController {
         customerService.save(customer);
 
         return RouteUtil.redirectString(URI_HOME);
+    }
+
+    @GetMapping(URI_CUSTOMER_DELETE)
+    public String delete(@PathVariable String id) {
+        Customer customer = customerService.findById(id);
+
+        if (!userService.getCurrentUserId().equals(customer.getUserId())) {
+            return RouteUtil.redirectString(URI_CUSTOMER_LIST);
+        }
+
+        customerService.delete(customer);
+        return RouteUtil.redirectString(URI_CUSTOMER_LIST);
     }
 }

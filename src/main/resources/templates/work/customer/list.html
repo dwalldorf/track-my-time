@@ -17,12 +17,12 @@
                 <tbody>
                 <tr th:each="entry:${allCustomers}">
                     <td>
-                        <a th:href="@{/work/customer/edit/{id}(id=${entry.id})}"
+                        <a th:href="@{/work/customer/{id}/edit(id=${entry.id})}"
                            role="button"
                            class="btn btn-default">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </a>
-                        <a th:href="@{/work/customer/delete(id=${entry.id})}"
+                        <a th:href="@{/work/customer/{id}/delete(id=${entry.id})}"
                            role="button"
                            class="btn btn-default">
                             <span class="glyphicon glyphicon-trash"></span>
