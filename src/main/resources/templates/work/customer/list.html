@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout::html-head('Entry Details')"></head>
+<body>
+<header th:replace="layout::site-header"></header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Customers</h1>
+
+            <table th:unless="${#lists.isEmpty(allCustomers)}" class="table table-striped table-hover">
+                <thead>
+                <th>Action</th>
+                <th>Customer</th>
+                </thead>
+                <tbody>
+                <tr th:each="entry:${allCustomers}">
+                    <td>
+                        <a th:href="@{/work/customer/edit(id=${entry.id})}"
+                           role="button"
+                           class="btn btn-default">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a th:href="@{/work/customer/delete(id=${entry.id})}"
+                           role="button"
+                           class="btn btn-default">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <span th:text="${entry.name}"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout::site-footer"></footer>
+</body>
+</html>

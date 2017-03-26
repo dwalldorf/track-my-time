@@ -6,6 +6,7 @@ import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.service.CustomerService;
 import com.dwalldorf.trackmytime.service.UserService;
 import com.dwalldorf.trackmytime.util.RouteUtil;
+import java.util.List;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,11 @@ public class WorkCustomerController {
         this.userService = userService;
     }
 
+    @ModelAttribute("allCustomers")
+    public List<Customer> allCustomers() {
+        return customerService.findAllByUser(userService.getCurrentUserId());
+    }
+
     @GetMapping("/add")
     public String addPage(@ModelAttribute Customer customer) {
         return "work/customer/edit";
@@ -39,5 +45,10 @@ public class WorkCustomerController {
         customerService.save(customer);
 
         return RouteUtil.redirectString(URI_HOME);
+    }
+
+    @GetMapping("/list")
+    public String listPage() {
+        return "work/customer/list";
     }
 }
