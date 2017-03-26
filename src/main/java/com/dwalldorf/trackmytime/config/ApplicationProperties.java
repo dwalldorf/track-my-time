@@ -3,6 +3,9 @@ package com.dwalldorf.trackmytime.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * Holds values from application.properties prefixed <code>app</code>.
+ */
 @Component
 public class ApplicationProperties {
 
