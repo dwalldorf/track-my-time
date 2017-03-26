@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-public class Project implements Serializable {
+public class Project implements HasUserId, Serializable {
 
     private String id;
 

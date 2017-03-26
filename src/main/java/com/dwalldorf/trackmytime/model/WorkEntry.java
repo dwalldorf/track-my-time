@@ -6,7 +6,7 @@ import org.mongodb.morphia.annotations.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "work_entries")
-public class WorkEntry implements Serializable {
+public class WorkEntry implements HasUserId, Serializable {
 
     @Id
     private String id;
