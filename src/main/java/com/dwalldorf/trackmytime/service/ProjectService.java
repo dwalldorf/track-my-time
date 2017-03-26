@@ -16,7 +16,19 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
+    public Project findById(String id) {
+        return projectRepository.findOne(id);
+    }
+
     public List<Project> findAllByUser(String userId) {
         return projectRepository.findByUserId(userId);
+    }
+
+    public void save(Project project) {
+        projectRepository.save(project);
+    }
+
+    public void delete(Project project) {
+        projectRepository.delete(project);
     }
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout::html-head('Entry Details')"></head>
+<body>
+<header th:replace="layout::site-header"></header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-offset-2 col-xs-8">
+            <h2 th:if="${!#strings.isEmpty(project.id)}">Edit "<span th:text="${project.name}"></span>"</h2>
+            <h2 th:if="${#strings.isEmpty(project.id)}">New Project</h2>
+
+            <form th:action="@{/work/project}" th:object="${project}" th:method="post" class="form-horizontal">
+                <input type="hidden"
+                       th:if="${!#strings.isEmpty(project.id)}"
+                       name="id"
+                       th:value="${project.id}"/>
+                <input type="hidden"
+                       th:if="${!#strings.isEmpty(project.id)}"
+                       name="userId"
+                       th:value="${project.userId}"/>
+
+                <div class="form-group">
+                    <label for="project" class="col-xs-2 control-label">Project:</label>
+                    <div class="col-xs-10">
+                        <input type="text"
+                               th:field="*{name}"
+                               class="form-control"
+                               name="project"
+                               id="project"
+                               placeholder="Project"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a th:href="@{/home}" class="btn btn-default">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout::site-footer"></footer>
+</body>
+</html>
