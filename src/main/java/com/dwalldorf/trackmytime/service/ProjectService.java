@@ -21,7 +21,7 @@ public class ProjectService {
     }
 
     public List<Project> findAllByUser(String userId) {
-        return projectRepository.findByUserId(userId);
+        return projectRepository.findByUserId_OrderByNameAsc(userId);
     }
 
     public void save(Project project) {

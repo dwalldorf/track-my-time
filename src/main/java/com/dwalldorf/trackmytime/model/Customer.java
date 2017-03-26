@@ -2,6 +2,7 @@ package com.dwalldorf.trackmytime.model;
 
 import java.io.Serializable;
 import org.mongodb.morphia.annotations.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -10,8 +11,10 @@ public class Customer implements Serializable {
     @Id
     private String id;
 
+    @Indexed
     private String userId;
 
+    @Indexed
     private String name;
 
     public String getId() {

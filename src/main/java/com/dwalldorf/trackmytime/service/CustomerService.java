@@ -21,7 +21,7 @@ public class CustomerService {
     }
 
     public List<Customer> findAllByUser(String userId) {
-        return customerRepository.findByUserId(userId);
+        return customerRepository.findByUserId_OrderByNameAsc(userId);
     }
 
     public void save(Customer customer) {

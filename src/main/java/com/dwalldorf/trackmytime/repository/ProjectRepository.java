@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface ProjectRepository extends MongoRepository<Project, String> {
 
-    List<Project> findByUserId(String userId);
+    List<Project> findByUserId_OrderByNameAsc(String userId);
 }

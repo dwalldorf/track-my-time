@@ -27,7 +27,14 @@
                 <div class="form-group">
                     <label for="project" class="col-xs-2 control-label">Project:</label>
                     <div class="col-xs-10">
-                        <input type="text" class="form-control" name="project" id="project" placeholder="Project"/>
+                        <select th:field="*{projectId}"
+                                name="project"
+                                id="project"
+                                class="form-control">
+                            <option th:each="project : ${allProjects}"
+                                    th:value="${project.id}"
+                                    th:text="${project.name}"></option>
+                        </select>
                     </div>
                 </div>
 

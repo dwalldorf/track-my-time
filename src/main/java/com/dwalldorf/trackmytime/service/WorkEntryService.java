@@ -34,6 +34,6 @@ public class WorkEntryService {
     }
 
     public List<Project> findAllProjectsByUser(String userId) {
-        return projectRepository.findByUserId(userId);
+        return projectRepository.findByUserId_OrderByNameAsc(userId);
     }
 }
