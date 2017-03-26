@@ -1,3 +1,7 @@
 #site-header {
     height: 50px;
 }
+
+.container-fluid {
+    text-align: left;
+}
