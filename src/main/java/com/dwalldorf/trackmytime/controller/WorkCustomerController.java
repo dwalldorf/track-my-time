@@ -12,14 +12,22 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/work/customer")
 public class WorkCustomerController {
+
+    private static final String URI_PREFIX = "/work/customer";
+
+    private static final String URI_CUSTOMER_LIST = URI_PREFIX + "/list";
+    private static final String URI_CUSTOMER_ADD = URI_PREFIX + "/add";
+    private static final String URI_CUSTOMER_EDIT = URI_PREFIX + "/edit/{id}";
+
+    private final static String VIEW_PREFIX = "/work/customer/";
+    private final static String VIEW_EDIT = VIEW_PREFIX + "edit";
+    private final static String VIEW_LIST = VIEW_PREFIX + "list";
 
     private final CustomerService customerService;
 
@@ -36,30 +44,35 @@ public class WorkCustomerController {
         return customerService.findAllByUser(userService.getCurrentUserId());
     }
 
-    @GetMapping("/add")
-    public String addPage() {
-        return "/work/customer/edit";
+    @GetMapping(URI_PREFIX)
+    public String indexRedirect() {
+        return RouteUtil.redirectString(URI_CUSTOMER_LIST);
     }
 
-    @GetMapping("/edit")
-    public ModelAndView editPage(@ModelAttribute Customer customer, @RequestParam String id) {
-        customer = customerService.findById(id);
+    @GetMapping(URI_CUSTOMER_LIST)
+    public String listPage() {
+        return VIEW_LIST;
+    }
 
-        ModelAndView mav = new ModelAndView("/work/customer/edit");
+    @GetMapping(URI_CUSTOMER_ADD)
+    public String addPage() {
+        return VIEW_EDIT;
+    }
+
+    @GetMapping(URI_CUSTOMER_EDIT)
+    public ModelAndView editPage(@PathVariable String id) {
+        Customer customer = customerService.findById(id);
+
+        ModelAndView mav = new ModelAndView(VIEW_EDIT);
         mav.addObject("customer", customer);
         return mav;
     }
 
-    @PostMapping
+    @PostMapping(URI_PREFIX)
     public String save(@ModelAttribute @Valid Customer customer) {
         customer.setUserId(userService.getCurrentUserId());
         customerService.save(customer);
 
         return RouteUtil.redirectString(URI_HOME);
-    }
-
-    @GetMapping("/list")
-    public String listPage() {
-        return "work/customer/list";
     }
 }

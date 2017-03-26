@@ -17,7 +17,7 @@
                 <tbody>
                 <tr th:each="entry:${allCustomers}">
                     <td>
-                        <a th:href="@{/work/customer/edit(id=${entry.id})}"
+                        <a th:href="@{/work/customer/edit/{id}(id=${entry.id})}"
                            role="button"
                            class="btn btn-default">
                             <span class="glyphicon glyphicon-pencil"></span>
