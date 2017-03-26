@@ -23,10 +23,13 @@ public class WorkController {
 
     private static final String URI_WORK_PREFIX = "/work";
 
-    public static final String URI_WORK_ADD = URI_WORK_PREFIX + "/add";
-    public static final String URI_WORK_LIST = URI_WORK_PREFIX + "/list";
-    public static final String URI_WORK_EDIT = URI_WORK_PREFIX + "/{id}/edit";
-    public static final String URI_WORK_DELETE = URI_WORK_PREFIX + "/{id}/delete";
+    private static final String URI_WORK_ADD = URI_WORK_PREFIX + "/add";
+    private static final String URI_WORK_LIST = URI_WORK_PREFIX + "/list";
+    private static final String URI_WORK_EDIT = URI_WORK_PREFIX + "/{id}/edit";
+    private static final String URI_WORK_DELETE = URI_WORK_PREFIX + "/{id}/delete";
+
+    private static final String VIEW_LIST = "";
+    private static final String VIEW_EDIT = "";
 
     private final UserService userService;
 
@@ -65,20 +68,20 @@ public class WorkController {
 
     @GetMapping(URI_WORK_LIST)
     public String listPage() {
-        return "work/list";
+        return VIEW_LIST;
     }
 
     @GetMapping(URI_WORK_ADD)
     public String addPage(@ModelAttribute("workEntry") WorkEntry workEntry) {
         workEntry.setUserId(userService.getCurrentUserId());
-        return "work/edit";
+        return VIEW_EDIT;
     }
 
     @GetMapping(URI_WORK_EDIT)
     public ModelAndView editPage(@PathVariable String id) {
         WorkEntry workEntry = workEntryService.findById(id);
 
-        ModelAndView mav = new ModelAndView("/work/edit");
+        ModelAndView mav = new ModelAndView(VIEW_EDIT);
         mav.addObject("workEntry", workEntry);
         return mav;
     }
