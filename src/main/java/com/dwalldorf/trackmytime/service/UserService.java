@@ -1,5 +1,6 @@
 package com.dwalldorf.trackmytime.service;
 
+import com.dwalldorf.trackmytime.config.SecurityUser;
 import com.dwalldorf.trackmytime.exception.InvalidFormInputException;
 import com.dwalldorf.trackmytime.forms.user.RegisterForm;
 import com.dwalldorf.trackmytime.model.User;
@@ -8,6 +9,7 @@ import java.util.Collections;
 import javax.inject.Inject;
 import org.joda.time.DateTime;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -62,10 +64,19 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("user not found: " + username);
         }
 
-        return new org.springframework.security.core.userdetails.User(
+        return new SecurityUser(
                 user.getUsername(),
                 user.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority("USER"))
+                Collections.singletonList(new SimpleGrantedAuthority("USER")),
+                user.getId()
         );
+    }
+
+    public String getCurrentUserId() {
+        return getCurrentUser().getId();
+    }
+
+    private SecurityUser getCurrentUser() {
+        return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="layout::html-head">
-    <title>Track my time!</title>
-</head>
+<head th:include="layout::html-head('Login')"></head>
 <body>
 <header th:replace="layout::site-header"></header>
 
-<h1>Login</h1>
-<form th:action="@{/login}" th:object="${loginForm}" method="post">
-    <div>
-        <label for="username">Username:</label>
-        <input type="text"
-               id="username"
-               name="username"
-               placeholder="Username"/>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 class="col-xs-offset-2">Login</h1>
+
+
+            <form th:action="@{/login}" th:object="${loginForm}" method="post" class="form-horizontal">
+                <div class="form-group">
+                    <label for="username" class="col-xs-2 control-label">Username:</label>
+                    <div class="col-xs-10 col-md-4">
+                        <input type="text"
+                               class="form-control"
+                               autofocus="autofocus"
+                               id="username"
+                               name="username"
+                               placeholder="Username"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">Password:</label>
+                    <div class="col-xs-10 col-md-4">
+                        <input type="password"
+                               class="form-control"
+                               id="password"
+                               name="password"
+                               placeholder="*****"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        <input type="submit" value="Login" class="btn btn-primary"/>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <div>
-        <label>Password:</label>
-        <input type="password"
-               id="password"
-               name="password"
-               placeholder="*****"/>
-    </div>
-    <div>
-        <input type="submit" value="Register"/>
-    </div>
-</form>
+</div>
 
 <footer th:replace="layout::site-footer"></footer>
 </body>

@@ -1,41 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="layout::html-head">
-    <title>Track my time!</title>
+<head th:include="layout::html-head('Register')">
+    <title>Login</title>
 </head>
 <body>
 <header th:replace="layout::site-header"></header>
 
-<h1>Register</h1>
-<form th:action="@{/register}" th:object="${registerForm}" method="post">
-    <div>
-        <label for="username">Username:</label>
-        <input type="text"
-               id="username"
-               name="username"
-               placeholder="Username"/>
-        <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</td>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 class="col-xs-offset-2">Register</h1>
+
+            <form th:action="@{/register}" th:object="${registerForm}" method="post" class="form-horizontal">
+                <div class="form-group">
+                    <label for="username" class="col-xs-2 control-label">Username:</label>
+                    <div class="col-xs-10 col-md-4">
+                        <input type="text"
+                               class="form-control"
+                               autofocus="autofocus"
+                               id="username"
+                               name="username"
+                               placeholder="Username"/>
+                        <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</td>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-xs-2 control-label">E-Mail:</label>
+                    <div class="col-xs-10 col-md-4">
+                        <input type="email"
+                               class="form-control"
+                               id="email"
+                               name="email"
+                               placeholder="address@host.tld"/>
+                        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">Password:</label>
+                    <div class="col-xs-10 col-md-4">
+                        <input type="password"
+                               class="form-control"
+                               id="password"
+                               name="password"
+                               placeholder="*****"/>
+                        <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        <input type="submit" value="Register" class="btn btn-primary"/>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <div>
-        <label for="email">E-Mail:</label>
-        <input type="email"
-               id="email"
-               name="email"
-               placeholder="address@host.tld"/>
-        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password"
-               id="password"
-               name="password"
-               placeholder="*****"/>
-        <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
-    </div>
-    <div>
-        <input type="submit" value="Login"/>
-    </div>
-</form>
+</div>
 
 <footer th:replace="layout::site-footer"></footer>
 </body>

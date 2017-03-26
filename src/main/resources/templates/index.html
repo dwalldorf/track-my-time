@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="layout::html-head">
-</head>
+<head th:include="layout::html-head('Home')"></head>
 <body>
 <header th:replace="layout::site-header"></header>
 
-<h1>Home</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Home</h1>
+        </div>
+    </div>
+</div>
 
 <footer th:replace="layout::site-footer"></footer>
 </body>
