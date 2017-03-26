@@ -7,9 +7,18 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-offset-2 col-xs-8">
+            <h2 th:if="${!#strings.isEmpty(customer.id)}">Edit "<span th:text="${customer.name}"></span>"</h2>
+            <h2 th:if="${#strings.isEmpty(customer.id)}">New Customer</h2>
+
             <form th:action="@{/work/customer}" th:object="${customer}" th:method="post" class="form-horizontal">
-                <input type="hidden" th:unless="${#strings.isEmpty(customer.id)}" name="id" th:value="${customer.id}"/>
-                <input type="hidden" th:unless="${#strings.isEmpty(customer.id)}" name="userId" th:value="${customer.userId}"/>
+                <input type="hidden"
+                       th:if="${!#strings.isEmpty(customer.id)}"
+                       name="id"
+                       th:value="${customer.id}"/>
+                <input type="hidden"
+                       th:if="${!#strings.isEmpty(customer.id)}"
+                       name="userId"
+                       th:value="${customer.userId}"/>
 
                 <div class="form-group">
                     <label for="customer" class="col-xs-2 control-label">Customer:</label>
