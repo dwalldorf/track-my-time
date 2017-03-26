@@ -1,6 +1,5 @@
 package com.dwalldorf.trackmytime.controller;
 
-import com.dwalldorf.trackmytime.exception.ResourceConflictException;
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.service.CustomerService;
 import com.dwalldorf.trackmytime.service.UserService;
@@ -72,15 +71,7 @@ public class WorkCustomerController {
 
     @PostMapping(URI_PREFIX)
     public String save(@ModelAttribute @Valid Customer customer) {
-        String currentUserId = userService.getCurrentUserId();
-
-        if (customer.getId() == null) {
-            customer.setUserId(currentUserId);
-        } else {
-            if (!currentUserId.equals(customer.getUserId())) {
-                throwResourceConflict(currentUserId, customer);
-            }
-        }
+        customer.setUserId(userService.getCurrentUserId());
         customerService.save(customer);
 
         return RouteUtil.redirectString(URI_CUSTOMER_LIST);
@@ -88,23 +79,9 @@ public class WorkCustomerController {
 
     @GetMapping(URI_CUSTOMER_DELETE)
     public String delete(@PathVariable String id) {
-        String currentUserId = userService.getCurrentUserId();
         Customer customer = customerService.findById(id);
-
-        if (!currentUserId.equals(customer.getUserId())) {
-            throwResourceConflict(currentUserId, customer);
-        }
-
         customerService.delete(customer);
-        return RouteUtil.redirectString(URI_CUSTOMER_LIST);
-    }
 
-    private void throwResourceConflict(String currentUserId, Customer customer) {
-        throw new ResourceConflictException(
-                String.format("User %s tried to modify work entry %s but belongs to user %s",
-                        currentUserId,
-                        customer.getId(),
-                        customer.getUserId())
-        );
+        return RouteUtil.redirectString(URI_CUSTOMER_LIST);
     }
 }
