@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/work/customer")
@@ -35,12 +37,21 @@ public class WorkCustomerController {
     }
 
     @GetMapping("/add")
-    public String addPage(@ModelAttribute Customer customer) {
-        return "work/customer/edit";
+    public String addPage() {
+        return "/work/customer/edit";
+    }
+
+    @GetMapping("/edit")
+    public ModelAndView editPage(@ModelAttribute Customer customer, @RequestParam String id) {
+        customer = customerService.findById(id);
+
+        ModelAndView mav = new ModelAndView("/work/customer/edit");
+        mav.addObject("customer", customer);
+        return mav;
     }
 
     @PostMapping
-    public String add(@ModelAttribute @Valid Customer customer) {
+    public String save(@ModelAttribute @Valid Customer customer) {
         customer.setUserId(userService.getCurrentUserId());
         customerService.save(customer);
 
