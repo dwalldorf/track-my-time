@@ -8,8 +8,8 @@
     <div class="row">
         <div class="col-xs-offset-2 col-xs-8">
             <form th:action="@{/work/customer}" th:object="${customer}" th:method="post" class="form-horizontal">
-                <input type="hidden" th:if="customer.id" name="id" th:value="${customer.id}"/>
-                <input type="hidden" th:if="customer.id" name="userId" th:value="${customer.userId}"/>
+                <input type="hidden" th:unless="${#strings.isEmpty(customer.id)}" name="id" th:value="${customer.id}"/>
+                <input type="hidden" th:unless="${#strings.isEmpty(customer.id)}" name="userId" th:value="${customer.userId}"/>
 
                 <div class="form-group">
                     <label for="customer" class="col-xs-2 control-label">Customer:</label>

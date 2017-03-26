@@ -1,7 +1,6 @@
 package com.dwalldorf.trackmytime.controller;
 
-import static com.dwalldorf.trackmytime.controller.IndexController.URI_HOME;
-
+import com.dwalldorf.trackmytime.exception.ResourceConflictException;
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.service.CustomerService;
 import com.dwalldorf.trackmytime.service.UserService;
@@ -56,8 +55,10 @@ public class WorkCustomerController {
     }
 
     @GetMapping(URI_CUSTOMER_ADD)
-    public String addPage() {
-        return VIEW_EDIT;
+    public ModelAndView addPage() {
+        ModelAndView mav = new ModelAndView(VIEW_EDIT);
+        mav.addObject("customer", new Customer());
+        return mav;
     }
 
     @GetMapping(URI_CUSTOMER_EDIT)
@@ -71,21 +72,39 @@ public class WorkCustomerController {
 
     @PostMapping(URI_PREFIX)
     public String save(@ModelAttribute @Valid Customer customer) {
-        customer.setUserId(userService.getCurrentUserId());
+        String currentUserId = userService.getCurrentUserId();
+
+        if (customer.getId() == null) {
+            customer.setUserId(currentUserId);
+        } else {
+            if (!currentUserId.equals(customer.getUserId())) {
+                throwResourceConflict(currentUserId, customer);
+            }
+        }
         customerService.save(customer);
 
-        return RouteUtil.redirectString(URI_HOME);
+        return RouteUtil.redirectString(URI_CUSTOMER_LIST);
     }
 
     @GetMapping(URI_CUSTOMER_DELETE)
     public String delete(@PathVariable String id) {
+        String currentUserId = userService.getCurrentUserId();
         Customer customer = customerService.findById(id);
 
-        if (!userService.getCurrentUserId().equals(customer.getUserId())) {
-            return RouteUtil.redirectString(URI_CUSTOMER_LIST);
+        if (!currentUserId.equals(customer.getUserId())) {
+            throwResourceConflict(currentUserId, customer);
         }
 
         customerService.delete(customer);
         return RouteUtil.redirectString(URI_CUSTOMER_LIST);
+    }
+
+    private void throwResourceConflict(String currentUserId, Customer customer) {
+        throw new ResourceConflictException(
+                String.format("User %s tried to modify work entry %s but belongs to user %s",
+                        currentUserId,
+                        customer.getId(),
+                        customer.getUserId())
+        );
     }
 }
