@@ -1,5 +1,6 @@
 package com.dwalldorf.trackmytime.controller;
 
+import com.dwalldorf.trackmytime.exception.ResourceConflictException;
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.model.Project;
 import com.dwalldorf.trackmytime.model.WorkEntry;
@@ -14,7 +15,9 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class WorkController {
@@ -23,6 +26,8 @@ public class WorkController {
 
     public static final String URI_WORK_ADD = URI_WORK_PREFIX + "/add";
     public static final String URI_WORK_LIST = URI_WORK_PREFIX + "/list";
+    public static final String URI_WORK_EDIT = URI_WORK_PREFIX + "/edit";
+    public static final String URI_WORK_DELETE = URI_WORK_PREFIX + "/delete";
 
     private final UserService userService;
 
@@ -76,5 +81,52 @@ public class WorkController {
 
         workEntryService.save(workEntry);
         return RouteUtil.redirectString(URI_WORK_LIST);
+    }
+
+    @GetMapping(URI_WORK_EDIT)
+    public ModelAndView editPage(@PathVariable String id) {
+        WorkEntry workEntry = workEntryService.findById(id);
+
+        ModelAndView mav = new ModelAndView("/work/edit");
+        mav.addObject("workEntry", workEntry);
+        return mav;
+    }
+
+    @PostMapping(URI_WORK_PREFIX)
+    public String save(@ModelAttribute @Valid WorkEntry workEntry) {
+        String currentUserId = userService.getCurrentUserId();
+
+        if (workEntry.getId() == null) {
+            workEntry.setUserId(currentUserId);
+        } else {
+            if (!currentUserId.equals(workEntry.getUserId())) {
+                throwResourceConflict(currentUserId, workEntry);
+            }
+        }
+        workEntryService.save(workEntry);
+
+        return RouteUtil.redirectString(URI_WORK_LIST);
+    }
+
+    @GetMapping(URI_WORK_DELETE)
+    public String delete(@PathVariable String id) {
+        String currentUserId = userService.getCurrentUserId();
+        WorkEntry workEntry = workEntryService.findById(id);
+
+        if (!currentUserId.equals(workEntry.getUserId())) {
+            throwResourceConflict(currentUserId, workEntry);
+        }
+
+        workEntryService.delete(workEntry);
+        return RouteUtil.redirectString(URI_WORK_LIST);
+    }
+
+    private void throwResourceConflict(String currentUserId, WorkEntry workEntry) {
+        throw new ResourceConflictException(
+                String.format("User %s tried to modify work entry %s but belongs to user %s",
+                        currentUserId,
+                        workEntry.getId(),
+                        workEntry.getUserId())
+        );
     }
 }

@@ -36,4 +36,12 @@ public class WorkEntryService {
     public List<Project> findAllProjectsByUser(String userId) {
         return projectRepository.findByUserId_OrderByNameAsc(userId);
     }
+
+    public WorkEntry findById(String id) {
+        return workEntryRepository.findOne(id);
+    }
+
+    public void delete(WorkEntry workEntry) {
+        workEntryRepository.delete(workEntry);
+    }
 }
