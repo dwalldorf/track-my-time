@@ -22,7 +22,21 @@
                 <ul class="nav nav-tabs" sec:authorize="isAuthenticated()">
                     <li role="presentation"><a th:href="@{/home}">Home</a></li>
                     <li role="presentation"><a th:href="@{/work/list}">All Work Entries</a></li>
-                    <li role="presentation"><a th:href="@{/work/add}">Add Work Entry</a></li>
+                    <li role="presentation">
+                        <a class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           href="#"
+                           role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+                            Add <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation"><a th:href="@{/work/add}">Work Entry</a></li>
+                            <li role="presentation"><a th:href="@{/work/custmer/add}">Customer</a></li>
+                            <li role="presentation"><a th:href="@{/work/project/add}">Project</a></li>
+                        </ul>
+                    </li>
                 </ul>
 
                 <ul class="nav nav-tabs" sec:authorize="!isAuthenticated()">
