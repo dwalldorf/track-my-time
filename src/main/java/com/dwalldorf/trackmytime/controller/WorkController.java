@@ -1,6 +1,5 @@
 package com.dwalldorf.trackmytime.controller;
 
-import com.dwalldorf.trackmytime.exception.ResourceConflictException;
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.model.Project;
 import com.dwalldorf.trackmytime.model.WorkEntry;
@@ -86,15 +85,7 @@ public class WorkController {
 
     @PostMapping(URI_WORK_PREFIX)
     public String save(@ModelAttribute @Valid WorkEntry workEntry) {
-        String currentUserId = userService.getCurrentUserId();
-
-        if (workEntry.getId() == null) {
-            workEntry.setUserId(currentUserId);
-        } else {
-            if (!currentUserId.equals(workEntry.getUserId())) {
-                throwResourceConflict(currentUserId, workEntry);
-            }
-        }
+        workEntry.setUserId(userService.getCurrentUserId());
         workEntryService.save(workEntry);
 
         return RouteUtil.redirectString(URI_WORK_LIST);
@@ -102,23 +93,9 @@ public class WorkController {
 
     @GetMapping(URI_WORK_DELETE)
     public String delete(@PathVariable String id) {
-        String currentUserId = userService.getCurrentUserId();
         WorkEntry workEntry = workEntryService.findById(id);
-
-        if (!currentUserId.equals(workEntry.getUserId())) {
-            throwResourceConflict(currentUserId, workEntry);
-        }
 
         workEntryService.delete(workEntry);
         return RouteUtil.redirectString(URI_WORK_LIST);
-    }
-
-    private void throwResourceConflict(String currentUserId, WorkEntry workEntry) {
-        throw new ResourceConflictException(
-                String.format("User %s tried to modify work entry %s but belongs to user %s",
-                        currentUserId,
-                        workEntry.getId(),
-                        workEntry.getUserId())
-        );
     }
 }
