@@ -1,6 +1,7 @@
 package com.dwalldorf.trackmytime.model;
 
 import java.io.Serializable;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,6 +14,7 @@ public class Project implements Serializable {
     private String userId;
 
     @Indexed
+    @NotEmpty(message = "name must not be empty")
     private String name;
 
     public String getId() {
