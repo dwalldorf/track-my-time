@@ -23,6 +23,8 @@ public class WorkEntry implements HasUserId, Serializable {
 
     private String comment;
 
+    private WorkEntrySource source;
+
     public String getId() {
         return id;
     }
@@ -83,6 +85,15 @@ public class WorkEntry implements HasUserId, Serializable {
 
     public WorkEntry setComment(String comment) {
         this.comment = comment;
+        return this;
+    }
+
+    public WorkEntrySource getSource() {
+        return source;
+    }
+
+    public WorkEntry setSource(WorkEntrySource source) {
+        this.source = source;
         return this;
     }
 }
