@@ -1,5 +1,7 @@
 package com.dwalldorf.trackmytime.controller;
 
+import static com.dwalldorf.trackmytime.model.WorkEntrySource.USER;
+
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.model.Project;
 import com.dwalldorf.trackmytime.model.WorkEntry;
@@ -88,7 +90,10 @@ public class WorkController {
 
     @PostMapping(URI_WORK_PREFIX)
     public String save(@ModelAttribute @Valid WorkEntry workEntry) {
-        workEntry.setUserId(userService.getCurrentUserId());
+        if (workEntry.getId() == null) {
+            workEntry.setUserId(userService.getCurrentUserId())
+                     .setSource(USER);
+        }
         workEntryService.save(workEntry);
 
         return RouteUtil.redirectString(URI_WORK_LIST);
