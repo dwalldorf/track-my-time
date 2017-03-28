@@ -11,7 +11,6 @@ import java.util.Collections;
 import javax.inject.Inject;
 import org.joda.time.DateTime;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,12 +21,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService implements UserDetailsService {
 
+    private final SessionService sessionService;
+
     private final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
 
     @Inject
-    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public UserService(SessionService sessionService, PasswordEncoder passwordEncoder, UserRepository userRepository) {
+        this.sessionService = sessionService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
@@ -75,7 +77,7 @@ public class UserService implements UserDetailsService {
     }
 
     public String getCurrentUserId() {
-        return getCurrentUser().getId();
+        return sessionService.getCurrentUserId();
     }
 
     /**
@@ -91,16 +93,12 @@ public class UserService implements UserDetailsService {
         if (!objectToModify.getUserId().equals(getCurrentUserId())) {
             String message = String.format(
                     "User %s tried to modify %s of type %s but belongs to %s",
-                    getCurrentUser(),
+                    getCurrentUserId(),
                     objectToModify.getId(),
                     objectToModify.getObjectType(),
                     objectToModify.getUserId()
             );
             throw new ResourceConflictException(message);
         }
-    }
-
-    private SecurityUser getCurrentUser() {
-        return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

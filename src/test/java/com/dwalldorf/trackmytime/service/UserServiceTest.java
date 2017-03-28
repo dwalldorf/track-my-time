@@ -1,32 +1,36 @@
 package com.dwalldorf.trackmytime.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 import com.dwalldorf.trackmytime.BaseTest;
+import com.dwalldorf.trackmytime.exception.ResourceConflictException;
 import com.dwalldorf.trackmytime.forms.user.RegisterForm;
+import com.dwalldorf.trackmytime.model.HasUserId;
 import com.dwalldorf.trackmytime.model.User;
 import com.dwalldorf.trackmytime.repository.UserRepository;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserServiceTest extends BaseTest {
 
+    @Mock
+    private SessionService mockSessionService;
+
+    @Mock
     private PasswordEncoder mockPasswordEncoder;
 
+    @Mock
     private UserRepository mockUserRepository;
 
     private UserService userService;
 
     @Override
     protected void setUp() {
-        this.mockPasswordEncoder = mock(PasswordEncoder.class);
-        this.mockUserRepository = mock(UserRepository.class);
-
-        this.userService = new UserService(mockPasswordEncoder, mockUserRepository);
+        this.userService = new UserService(mockSessionService, mockPasswordEncoder, mockUserRepository);
     }
 
     @Test
@@ -79,8 +83,27 @@ public class UserServiceTest extends BaseTest {
         assertEquals(1, userDetails.getAuthorities().size());
     }
 
+    @Test(expected = ResourceConflictException.class)
+    public void testVerifyOwner_ThrowsResourceConflictException() {
+        final String currentUserId = "123";
+        final String objectUserId = "321";
+
+        HasUserId mockObject = mock(HasUserId.class);
+        when(mockObject.getUserId()).thenReturn(objectUserId);
+        when(mockSessionService.getCurrentUserId()).thenReturn(currentUserId);
+
+        userService.verifyOwner(mockObject);
+    }
+
     @Test
-    public void testVerifyOwner() throws Exception {
-        fail("test me");
+    public void testVerifyOwner() {
+        final String currentUserId = "123";
+        final String objectUserId = currentUserId;
+
+        HasUserId mockObject = mock(HasUserId.class);
+        when(mockObject.getUserId()).thenReturn(objectUserId);
+        when(mockSessionService.getCurrentUserId()).thenReturn(currentUserId);
+
+        userService.verifyOwner(mockObject);
     }
 }
