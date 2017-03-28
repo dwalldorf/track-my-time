@@ -25,6 +25,11 @@ public class WorkEntry implements HasUserId, Serializable {
 
     private WorkEntrySource source;
 
+    @Override
+    public String getObjectType() {
+        return "WorkEntry";
+    }
+
     public String getId() {
         return id;
     }

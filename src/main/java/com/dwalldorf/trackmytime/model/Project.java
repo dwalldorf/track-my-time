@@ -13,6 +13,11 @@ public class Project implements HasUserId, Serializable {
     @Indexed
     private String userId;
 
+    @Override
+    public String getObjectType() {
+        return "Project";
+    }
+
     @Indexed
     @NotEmpty(message = "name must not be empty")
     private String name;

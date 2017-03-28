@@ -1,6 +1,11 @@
 package com.dwalldorf.trackmytime.model;
 
-public interface HasUserId {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+public interface HasUserId extends HasId {
 
     String getUserId();
+
+    @JsonIgnore
+    String getObjectType();
 }

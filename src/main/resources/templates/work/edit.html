@@ -62,7 +62,12 @@
                 <div class="form-group">
                     <label for="comment" class="col-xs-2 control-label">Comment:</label>
                     <div class="col-xs-10">
-                        <textarea class="form-control" name="comment" id="comment" rows="3"></textarea>
+                        <textarea class="form-control"
+                                  name="comment"
+                                  id="comment"
+                                  rows="3"
+                                  th:field="*{comment}">
+                        </textarea>
                     </div>
                 </div>
 

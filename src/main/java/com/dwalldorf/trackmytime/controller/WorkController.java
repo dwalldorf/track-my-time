@@ -83,6 +83,9 @@ public class WorkController {
     public ModelAndView editPage(@PathVariable String id) {
         WorkEntry workEntry = workEntryService.findById(id);
 
+        // don't even display if it doesn't belong to current user
+        userService.verifyOwner(workEntry);
+
         ModelAndView mav = new ModelAndView(VIEW_EDIT);
         mav.addObject("workEntry", workEntry);
         return mav;
@@ -93,7 +96,19 @@ public class WorkController {
         if (workEntry.getId() == null) {
             workEntry.setUserId(userService.getCurrentUserId())
                      .setSource(USER);
+        } else { // update an entry
+            WorkEntry persistedEntry = workEntryService.findById(workEntry.getId());
+            userService.verifyOwner(persistedEntry);
+
+            persistedEntry.setCustomerId(workEntry.getCustomerId())
+                          .setProjectId(workEntry.getProjectId())
+                          .setComment(workEntry.getComment())
+                          .setStart(workEntry.getStart())
+                          .setStop(workEntry.getStop());
+
+            workEntry = persistedEntry;
         }
+
         workEntryService.save(workEntry);
 
         return RouteUtil.redirectString(URI_WORK_LIST);
@@ -102,6 +117,8 @@ public class WorkController {
     @GetMapping(URI_WORK_DELETE)
     public String delete(@PathVariable String id) {
         WorkEntry workEntry = workEntryService.findById(id);
+
+        userService.verifyOwner(workEntry);
 
         workEntryService.delete(workEntry);
         return RouteUtil.redirectString(URI_WORK_LIST);
