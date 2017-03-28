@@ -73,7 +73,12 @@ public class WorkCustomerController {
 
     @PostMapping(URI_PREFIX)
     public String save(@ModelAttribute @Valid Customer customer) {
-        customer.setUserId(userService.getCurrentUserId());
+        if (customer.getId() == null) {
+            customer.setUserId(userService.getCurrentUserId());
+        } else {
+            Customer persistedCustomer = customerService.findById(customer.getId());
+            userService.verifyOwner(persistedCustomer);
+        }
         customerService.save(customer);
 
         return RouteUtil.redirectString(URI_CUSTOMER_LIST);
