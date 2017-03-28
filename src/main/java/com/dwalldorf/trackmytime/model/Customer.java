@@ -15,6 +15,11 @@ public class Customer implements HasUserId, Serializable {
     @Indexed
     private String userId;
 
+    @Override
+    public String getObjectType() {
+        return "Customer";
+    }
+
     @Indexed
     @NotEmpty(message = "name must not be empty")
     private String name;
