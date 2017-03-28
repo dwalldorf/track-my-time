@@ -1,6 +1,7 @@
 package com.dwalldorf.trackmytime.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 import com.dwalldorf.trackmytime.BaseTest;
@@ -76,5 +77,10 @@ public class UserServiceTest extends BaseTest {
         assertEquals(username, userDetails.getUsername());
         assertEquals(password, userDetails.getPassword());
         assertEquals(1, userDetails.getAuthorities().size());
+    }
+
+    @Test
+    public void testVerifyOwner() throws Exception {
+        fail("test me");
     }
 }
