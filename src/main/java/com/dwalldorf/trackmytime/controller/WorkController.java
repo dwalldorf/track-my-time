@@ -12,7 +12,6 @@ import com.dwalldorf.trackmytime.service.WorkEntryService;
 import com.dwalldorf.trackmytime.util.RouteUtil;
 import java.util.List;
 import javax.inject.Inject;
-import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -92,7 +91,7 @@ public class WorkController {
     }
 
     @PostMapping(URI_WORK_PREFIX)
-    public String save(@ModelAttribute @Valid WorkEntry workEntry) {
+    public String save(@ModelAttribute WorkEntry workEntry) {
         if (workEntry.getId() == null) {
             workEntry.setUserId(userService.getCurrentUserId())
                      .setSource(USER);
