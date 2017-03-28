@@ -64,6 +64,8 @@ public class WorkProjectController {
     public ModelAndView editPage(@PathVariable String id) {
         Project project = projectService.findById(id);
 
+        userService.verifyOwner(project);
+
         ModelAndView mav = new ModelAndView(VIEW_EDIT);
         mav.addObject("project", project);
         return mav;
@@ -71,7 +73,13 @@ public class WorkProjectController {
 
     @PostMapping(URI_PREFIX)
     public String save(@ModelAttribute @Valid Project project) {
-        project.setUserId(userService.getCurrentUserId());
+        if (project.getId() == null) {
+            project.setUserId(userService.getCurrentUserId());
+        } else {
+            Project persistedProject = projectService.findById(project.getId());
+            userService.verifyOwner(persistedProject);
+        }
+
         projectService.save(project);
 
         return RouteUtil.redirectString(URI_PROJECT_LIST);
@@ -80,6 +88,8 @@ public class WorkProjectController {
     @GetMapping(URI_PROJECT_DELETE)
     public String delete(@PathVariable String id) {
         Project project = projectService.findById(id);
+
+        userService.verifyOwner(project);
         projectService.delete(project);
 
         return RouteUtil.redirectString(URI_PROJECT_LIST);
