@@ -110,7 +110,6 @@ public class WorkCustomerControllerTest extends BaseTest {
         Customer mockPersistedCustomer = new Customer().setId(id);
         when(mockCustomerService.findById(eq(id))).thenReturn(mockPersistedCustomer);
 
-
         customerController.delete(id);
 
         verify(mockCustomerService).delete(eq(mockPersistedCustomer));
