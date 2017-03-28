@@ -61,7 +61,7 @@ public class WorkControllerTest extends BaseTest {
     }
 
     @Test
-    public void testSave_ExistingEntry() {
+    public void testSave_UpdateEntry() {
         final String mockCurrentUserId = "58d7f5895ff8d846183ebbcb";
         when(mockUserService.getCurrentUserId()).thenReturn(mockCurrentUserId);
         WorkEntry workEntry = createWorkEntry();
