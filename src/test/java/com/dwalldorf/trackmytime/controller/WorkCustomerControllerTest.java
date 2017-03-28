@@ -103,4 +103,16 @@ public class WorkCustomerControllerTest extends BaseTest {
 
         verify(mockUserService).verifyOwner(eq(mockPersistedCustomer));
     }
+
+    @Test
+    public void testDelete() throws Exception {
+        final String id = "58d7f5925ff8d846183ebbcc";
+        Customer mockPersistedCustomer = new Customer().setId(id);
+        when(mockCustomerService.findById(eq(id))).thenReturn(mockPersistedCustomer);
+
+
+        customerController.delete(id);
+
+        verify(mockCustomerService).delete(eq(mockPersistedCustomer));
+    }
 }
