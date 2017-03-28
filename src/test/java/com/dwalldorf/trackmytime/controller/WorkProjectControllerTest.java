@@ -26,4 +26,9 @@ public class WorkProjectControllerTest extends BaseTest {
     @Test
     public void testDelete_VerifiesResourceOwner() {
     }
+
+    @Test
+    public void testDelete() throws Exception {
+
+    }
 }
