@@ -2,7 +2,9 @@ package com.dwalldorf.trackmytime.service;
 
 import com.dwalldorf.trackmytime.config.SecurityUser;
 import com.dwalldorf.trackmytime.exception.InvalidFormInputException;
+import com.dwalldorf.trackmytime.exception.ResourceConflictException;
 import com.dwalldorf.trackmytime.forms.user.RegisterForm;
+import com.dwalldorf.trackmytime.model.HasUserId;
 import com.dwalldorf.trackmytime.model.User;
 import com.dwalldorf.trackmytime.repository.UserRepository;
 import java.util.Collections;
@@ -74,6 +76,28 @@ public class UserService implements UserDetailsService {
 
     public String getCurrentUserId() {
         return getCurrentUser().getId();
+    }
+
+    /**
+     * Verifies the object to modify belongs to the current user.
+     *
+     * @param objectToModify object to perform check on
+     * @throws ResourceConflictException in case the object belongs to another user
+     */
+    public void verifyOwner(HasUserId objectToModify) throws ResourceConflictException {
+        if (objectToModify.getUserId() == null) {
+            return;
+        }
+        if (!objectToModify.getUserId().equals(getCurrentUserId())) {
+            String message = String.format(
+                    "User %s tried to modify %s of type %s but belongs to %s",
+                    getCurrentUser(),
+                    objectToModify.getId(),
+                    objectToModify.getObjectType(),
+                    objectToModify.getUserId()
+            );
+            throw new ResourceConflictException(message);
+        }
     }
 
     private SecurityUser getCurrentUser() {
