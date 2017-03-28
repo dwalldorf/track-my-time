@@ -29,7 +29,7 @@ public class WorkCustomerControllerTest extends BaseTest {
     }
 
     @Test
-    public void editPage() {
+    public void testEditPage_VerifiesResourceOwner() {
         final String id = "58d7f5925ff8d846183ebbcc";
         Customer mockPersistedCustomer = new Customer().setId(id);
         when(mockCustomerService.findById(eq(id))).thenReturn(mockPersistedCustomer);
@@ -62,7 +62,7 @@ public class WorkCustomerControllerTest extends BaseTest {
         when(mockUserService.getCurrentUserId()).thenReturn(mockCurrentUserId);
         Customer customer = new Customer();
         customer.setId("2c11acf45ff8d8461834f299")
-                 .setUserId(mockCurrentUserId);
+                .setUserId(mockCurrentUserId);
 
         when(mockCustomerService.findById(eq(customer.getId()))).thenReturn(customer);
 
@@ -93,7 +93,7 @@ public class WorkCustomerControllerTest extends BaseTest {
     }
 
     @Test
-    public void delete() {
+    public void testDelete_VerifiesResourceOwner() {
         final String id = "58d7f5925ff8d846183ebbcc";
         Customer mockPersistedCustomer = new Customer().setId(id);
         when(mockCustomerService.findById(eq(id))).thenReturn(mockPersistedCustomer);
