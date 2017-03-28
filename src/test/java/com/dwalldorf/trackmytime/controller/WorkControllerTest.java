@@ -99,6 +99,17 @@ public class WorkControllerTest extends BaseTest {
     }
 
     @Test
+    public void testEditPage_VerifiesResourceOwner() {
+        final String id = "58d7f5925ff8d846183ebbcc";
+        WorkEntry mockPersistedEntry = new WorkEntry().setId(id);
+        when(mockWorkEntryService.findById(eq(id))).thenReturn(mockPersistedEntry);
+
+        workController.editPage(id);
+
+        verify(mockUserService).verifyOwner(eq(mockPersistedEntry));
+    }
+
+    @Test
     public void testDelete() {
         final String id = "58d7f5925ff8d846183ebbcc";
         WorkEntry mockPersistedEntry = new WorkEntry().setId(id);
@@ -110,7 +121,7 @@ public class WorkControllerTest extends BaseTest {
     }
 
     @Test
-    public void testDelete_VerifiesResourceOwner() throws Exception {
+    public void testDelete_VerifiesResourceOwner() {
         final String id = "58d7f5925ff8d846183ebbcc";
         WorkEntry mockPersistedEntry = new WorkEntry().setId(id);
         when(mockWorkEntryService.findById(eq(id))).thenReturn(mockPersistedEntry);
