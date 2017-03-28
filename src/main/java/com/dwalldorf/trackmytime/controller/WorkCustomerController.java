@@ -64,6 +64,8 @@ public class WorkCustomerController {
     public ModelAndView editPage(@PathVariable String id) {
         Customer customer = customerService.findById(id);
 
+        userService.verifyOwner(customer);
+
         ModelAndView mav = new ModelAndView(VIEW_EDIT);
         mav.addObject("customer", customer);
         return mav;
@@ -71,7 +73,12 @@ public class WorkCustomerController {
 
     @PostMapping(URI_PREFIX)
     public String save(@ModelAttribute @Valid Customer customer) {
-        customer.setUserId(userService.getCurrentUserId());
+        if (customer.getId() == null) {
+            customer.setUserId(userService.getCurrentUserId());
+        } else {
+            Customer persistedCustomer = customerService.findById(customer.getId());
+            userService.verifyOwner(persistedCustomer);
+        }
         customerService.save(customer);
 
         return RouteUtil.redirectString(URI_CUSTOMER_LIST);
@@ -80,6 +87,8 @@ public class WorkCustomerController {
     @GetMapping(URI_CUSTOMER_DELETE)
     public String delete(@PathVariable String id) {
         Customer customer = customerService.findById(id);
+        userService.verifyOwner(customer);
+
         customerService.delete(customer);
 
         return RouteUtil.redirectString(URI_CUSTOMER_LIST);
