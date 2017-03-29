@@ -6,6 +6,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 import com.dwalldorf.trackmytime.BaseTest;
+import com.dwalldorf.trackmytime.forms.workentry.WorkEntryForm;
 import com.dwalldorf.trackmytime.model.WorkEntry;
 import com.dwalldorf.trackmytime.service.CustomerService;
 import com.dwalldorf.trackmytime.service.ProjectService;
@@ -47,7 +48,7 @@ public class WorkControllerTest extends BaseTest {
         when(mockUserService.getCurrentUserId()).thenReturn(mockCurrentUserId);
         WorkEntry workEntry = createWorkEntry();
 
-        workController.save(workEntry);
+        workController.save(WorkEntryForm.fromWorkEntry(workEntry));
 
         ArgumentCaptor<WorkEntry> workEntryCaptor = ArgumentCaptor.forClass(WorkEntry.class);
         verify(mockWorkEntryService).save(workEntryCaptor.capture());
@@ -70,7 +71,7 @@ public class WorkControllerTest extends BaseTest {
 
         when(mockWorkEntryService.findById(eq(workEntry.getId()))).thenReturn(workEntry);
 
-        workController.save(workEntry);
+        workController.save(WorkEntryForm.fromWorkEntry(workEntry));
 
         ArgumentCaptor<WorkEntry> workEntryCaptor = ArgumentCaptor.forClass(WorkEntry.class);
         verify(mockWorkEntryService).save(workEntryCaptor.capture());
@@ -93,7 +94,7 @@ public class WorkControllerTest extends BaseTest {
                 .setUserId(originalUserId);
         when(mockWorkEntryService.findById(eq(workEntry.getId()))).thenReturn(workEntry);
 
-        workController.save(workEntry);
+        workController.save(WorkEntryForm.fromWorkEntry(workEntry));
 
         verify(mockUserService).verifyOwner(eq(workEntry));
     }

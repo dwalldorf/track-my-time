@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-offset-2 col-xs-8">
-            <form th:action="@{/work}" th:object="${workEntry}" th:method="post" class="form-horizontal">
+            <form th:action="@{/work}" th:object="${workEntryForm}" th:method="post" class="form-horizontal">
                 <input type="hidden"
                        th:if="${!#strings.isEmpty(id)}"
                        name="id"
@@ -52,7 +52,8 @@
                             <input type='text'
                                    class="form-control"
                                    name="start"
-                                   id="start"/>
+                                   id="start"
+                                   th:value="*{startString}"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -64,7 +65,11 @@
                     <label for="stop" class="col-xs-2 control-label">Stop:</label>
                     <div class="col-xs-10">
                         <div class="input-group date datetimepicker">
-                            <input type='text' class="form-control" name="stop" id="stop"/>
+                            <input type='text'
+                                   class="form-control"
+                                   name="stop"
+                                   id="stop"
+                                   th:value="*{stopString}"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>

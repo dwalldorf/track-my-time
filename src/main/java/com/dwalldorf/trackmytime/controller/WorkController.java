@@ -2,6 +2,7 @@ package com.dwalldorf.trackmytime.controller;
 
 import static com.dwalldorf.trackmytime.model.WorkEntrySource.USER;
 
+import com.dwalldorf.trackmytime.forms.workentry.WorkEntryForm;
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.model.Project;
 import com.dwalldorf.trackmytime.model.WorkEntry;
@@ -73,8 +74,8 @@ public class WorkController {
     }
 
     @GetMapping(URI_WORK_ADD)
-    public String addPage(@ModelAttribute("workEntry") WorkEntry workEntry) {
-        workEntry.setUserId(userService.getCurrentUserId());
+    public String addPage(@ModelAttribute("workEntryForm") WorkEntryForm workEntryForm) {
+        workEntryForm.setUserId(userService.getCurrentUserId());
         return VIEW_EDIT;
     }
 
@@ -86,12 +87,13 @@ public class WorkController {
         userService.verifyOwner(workEntry);
 
         ModelAndView mav = new ModelAndView(VIEW_EDIT);
-        mav.addObject("workEntry", workEntry);
+        mav.addObject("workEntryForm", WorkEntryForm.fromWorkEntry(workEntry));
         return mav;
     }
 
     @PostMapping(URI_WORK_PREFIX)
-    public String save(@ModelAttribute WorkEntry workEntry) {
+    public String save(@ModelAttribute WorkEntryForm workEntryForm) {
+        WorkEntry workEntry = workEntryForm.toWorkEntry();
         if (workEntry.getId() == null) {
             workEntry.setUserId(userService.getCurrentUserId())
                      .setSource(USER);
