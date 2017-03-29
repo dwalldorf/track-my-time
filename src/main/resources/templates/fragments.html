@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+
+<div th:fragment="datetimepicker(elementId)">
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        var dateTimeConfig = {format: 'YYYY-MM-DD hh:mm'},
+            elementId = /*[[${elementId}]]*/ 'elementId';
+
+        $(elementId).datetimepicker(dateTimeConfig);
+        /*]]>*/
+    </script>
+</div>
+</body>
+</html>
