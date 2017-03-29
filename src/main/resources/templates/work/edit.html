@@ -96,11 +96,7 @@
 </div>
 
 <footer th:replace="layout::site-footer"></footer>
-<script type="text/javascript">
-    $(function () {
-        $('#start').datetimepicker();
-        $('#stop').datetimepicker();
-    });
-</script>
+<div th:replace="fragments::datetimepicker('#start')"></div>
+<div th:replace="fragments::datetimepicker('#stop')"></div>
 </body>
 </html>
