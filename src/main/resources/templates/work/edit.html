@@ -48,9 +48,11 @@
                 <div class="form-group">
                     <label for="start" class="col-xs-2 control-label">Start:</label>
                     <div class="col-xs-10">
-                        <!--<input type="datetime-local" class="form-control" name="start" id="start"/>-->
-                        <div class="input-group-date datetimepicker">
-                            <input type='text' class="form-control" name="start" id="start"/>
+                        <div class="input-group date datetimepicker">
+                            <input type='text'
+                                   class="form-control"
+                                   name="start"
+                                   id="start"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -61,7 +63,12 @@
                 <div class="form-group">
                     <label for="stop" class="col-xs-2 control-label">Stop:</label>
                     <div class="col-xs-10">
-                        <input type="datetime-local" class="form-control" name="stop" id="stop"/>
+                        <div class="input-group date datetimepicker">
+                            <input type='text' class="form-control" name="stop" id="stop"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -89,6 +96,11 @@
 </div>
 
 <footer th:replace="layout::site-footer"></footer>
-<script type="text/javascript" th:src="@{/js/datetimepicker.js}" src="../../static/js/datetimepicker.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#start').datetimepicker();
+        $('#stop').datetimepicker();
+    });
+</script>
 </body>
 </html>
