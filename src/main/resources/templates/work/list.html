@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="layout::html-head('Entry Details')"></head>
+<head th:include="layout::html-head('Entry Details')">
+    <link rel="stylesheet"
+          type="text/css"
+          th:href="@{/css/work/list.css}"
+          href="../../static/css/work/list.css"/>
+</head>
 <body>
 <header th:replace="layout::site-header"></header>
 
@@ -17,7 +22,9 @@
                 <th class="hidden-xs co-sm-4 col-lg-5">Comment</th>
                 </thead>
                 <tbody>
-                <tr th:each="entry:${allEntries}">
+                <tr th:each="entry:${allEntries}"
+                    th:title="${entry.missingStop()==true ? 'Entry has no stop date and time':''}"
+                    th:classappend="${entry.missingStop()==true ? 'entry-missing-stop':''}">
                     <td>
                         <a th:href="@{/work/{id}/edit(id=${entry.id})}" class="btn btn-default btn-sm">
                             <span class="glyphicon glyphicon-pencil"></span>
