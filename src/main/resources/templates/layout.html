@@ -71,8 +71,14 @@
                 </ul>
 
                 <ul class="nav nav-tabs" sec:authorize="!isAuthenticated()">
-                    <li role="presentation"><a th:href="@{/login}">Login</a></li>
-                    <li role="presentation"><a th:href="@{/register}">Register</a></li>
+                    <li role="presentation"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}">
+                        <a th:href="@{/login}">Login</a>
+                    </li>
+                    <li role="presentation"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/register' ? 'active':''}">
+                        <a th:href="@{/register}">Register</a>
+                    </li>
                 </ul>
             </div>
             <div class="col-xs-2">
