@@ -2,7 +2,7 @@ package com.dwalldorf.trackmytime.controller;
 
 import static com.dwalldorf.trackmytime.model.WorkEntrySource.USER;
 
-import com.dwalldorf.trackmytime.forms.workentry.WorkEntryForm;
+import com.dwalldorf.trackmytime.forms.work.WorkEntryForm;
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.model.Project;
 import com.dwalldorf.trackmytime.model.WorkEntry;
@@ -11,6 +11,7 @@ import com.dwalldorf.trackmytime.service.ProjectService;
 import com.dwalldorf.trackmytime.service.UserService;
 import com.dwalldorf.trackmytime.service.WorkEntryService;
 import com.dwalldorf.trackmytime.util.RouteUtil;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
@@ -54,8 +55,12 @@ public class WorkController {
     }
 
     @ModelAttribute("allEntries")
-    public List<WorkEntry> allEntries() {
-        return workEntryService.findAllByUser(userService.getCurrentUserId());
+    public List<WorkEntryForm> allEntries() {
+        List<WorkEntry> all = workEntryService.findAllByUser(userService.getCurrentUserId());
+        List<WorkEntryForm> result = new ArrayList<>();
+
+        all.forEach(entry -> result.add(WorkEntryForm.fromWorkEntry(entry)));
+        return result;
     }
 
     @ModelAttribute("allCustomers")

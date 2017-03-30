@@ -6,7 +6,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 import com.dwalldorf.trackmytime.BaseTest;
-import com.dwalldorf.trackmytime.forms.workentry.WorkEntryForm;
+import com.dwalldorf.trackmytime.forms.work.WorkEntryForm;
 import com.dwalldorf.trackmytime.model.WorkEntry;
 import com.dwalldorf.trackmytime.service.CustomerService;
 import com.dwalldorf.trackmytime.service.ProjectService;

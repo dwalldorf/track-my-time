@@ -1,4 +1,4 @@
-package com.dwalldorf.trackmytime.forms.workentry;
+package com.dwalldorf.trackmytime.forms.work;
 
 import com.dwalldorf.trackmytime.model.WorkEntry;
 import com.dwalldorf.trackmytime.model.WorkEntrySource;
@@ -162,5 +162,12 @@ public class WorkEntryForm implements Serializable {
             return null;
         }
         return DATE_TIME_FORMATTER.print(new DateTime(stop));
+    }
+
+    public boolean missingStop() {
+        if (start == null) {
+            return false;
+        }
+        return stop == null;
     }
 }
