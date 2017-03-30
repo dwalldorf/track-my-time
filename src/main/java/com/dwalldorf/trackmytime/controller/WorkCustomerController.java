@@ -6,7 +6,6 @@ import com.dwalldorf.trackmytime.service.UserService;
 import com.dwalldorf.trackmytime.util.RouteUtil;
 import java.util.List;
 import javax.inject.Inject;
-import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -72,7 +71,7 @@ public class WorkCustomerController {
     }
 
     @PostMapping(URI_PREFIX)
-    public String save(@ModelAttribute @Valid Customer customer) {
+    public String save(@ModelAttribute Customer customer) {
         if (customer.getId() == null) {
             customer.setUserId(userService.getCurrentUserId());
         } else {

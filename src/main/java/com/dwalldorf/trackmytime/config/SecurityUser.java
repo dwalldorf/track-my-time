@@ -10,9 +10,9 @@ public class SecurityUser extends User implements Serializable {
     /**
      * User id
      */
-    private String id;
+    private final String id;
 
-    public <T> SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities, String id) {
+    public SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities, String id) {
         super(
                 username,
                 password,

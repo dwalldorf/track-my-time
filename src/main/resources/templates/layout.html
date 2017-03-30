@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
           href="../static/vendor/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}"
+          href="../static/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" href="../static/css/layout.css"/>
 
     <title th:inline="text">Track my time! - [[${title}]]</title>
@@ -73,9 +75,15 @@
     <script th:src="@{/vendor/jquery/jquery-3.2.0.min.js}"
             src="../static/vendor/jquery/jquery-3.2.0.min.js"
             type="text/javascript"></script>
+    <script th:src="@{/vendor/momentjs/moment-2.18.1.min.js}"
+            type="text/javascript"
+            src="../static/vendor/momentjs/moment-2.18.1.min.js"></script>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"
             type="text/javascript"
             src="../static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script th:src="@{/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"
+            type="text/javascript"
+            src="../static/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 </footer>
 </body>
 </html>
