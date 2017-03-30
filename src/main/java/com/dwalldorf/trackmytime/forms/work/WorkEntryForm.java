@@ -1,4 +1,4 @@
-package com.dwalldorf.trackmytime.forms.workentry;
+package com.dwalldorf.trackmytime.forms.work;
 
 import com.dwalldorf.trackmytime.model.WorkEntry;
 import com.dwalldorf.trackmytime.model.WorkEntrySource;

@@ -2,7 +2,7 @@ package com.dwalldorf.trackmytime.controller;
 
 import static com.dwalldorf.trackmytime.model.WorkEntrySource.USER;
 
-import com.dwalldorf.trackmytime.forms.workentry.WorkEntryForm;
+import com.dwalldorf.trackmytime.forms.work.WorkEntryForm;
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.model.Project;
 import com.dwalldorf.trackmytime.model.WorkEntry;

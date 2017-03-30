@@ -1,4 +1,4 @@
-package com.dwalldorf.trackmytime.forms.workentry;
+package com.dwalldorf.trackmytime.forms.work;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
