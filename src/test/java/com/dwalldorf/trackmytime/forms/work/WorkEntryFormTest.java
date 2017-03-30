@@ -1,7 +1,9 @@
 package com.dwalldorf.trackmytime.forms.work;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.dwalldorf.trackmytime.BaseTest;
 import com.dwalldorf.trackmytime.model.WorkEntry;
@@ -85,5 +87,28 @@ public class WorkEntryFormTest extends BaseTest {
         WorkEntryForm form = WorkEntryForm.fromWorkEntry(entry);
 
         assertNull(form.getStop());
+    }
+
+    @Test
+    public void testMissingStop_NoStart() throws Exception {
+        WorkEntryForm form = new WorkEntryForm();
+        assertFalse(form.missingStop());
+    }
+
+    @Test
+    public void testMissingStop_NoStop() throws Exception {
+        WorkEntryForm form = new WorkEntryForm()
+                .setStart(new Date());
+
+        assertTrue(form.missingStop());
+    }
+
+    @Test
+    public void testMissingStop_StartAndStopSet() throws Exception {
+        WorkEntryForm form = new WorkEntryForm()
+                .setStart(new Date())
+                .setStop(new Date());
+
+        assertFalse(form.missingStop());
     }
 }
