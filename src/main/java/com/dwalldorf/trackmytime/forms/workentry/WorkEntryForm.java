@@ -42,6 +42,7 @@ public class WorkEntryForm implements Serializable {
         } else {
             workEntry.setStart(new DateTime(form.getStart()));
         }
+
         if (form.getStop() == null) {
             workEntry.setStop(null);
         } else {
