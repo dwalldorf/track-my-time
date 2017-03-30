@@ -8,7 +8,8 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
           href="../static/vendor/bootstrap/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}"
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}"
           href="../static/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" href="../static/css/layout.css"/>
 
@@ -22,9 +23,20 @@
         <div class="row">
             <div class="col-xs-10">
                 <ul class="nav nav-tabs" sec:authorize="isAuthenticated()">
-                    <li role="presentation"><a th:href="@{/home}">Home</a></li>
-                    <li role="presentation"><a th:href="@{/work/list}">All Work Entries</a></li>
-                    <li role="presentation">
+                    <li role="presentation"
+                        th:classappend="${#httpServletRequest.getRequestURI()=='/'||
+                        #httpServletRequest.getRequestURI()=='/home'?'active':''}">
+                        <a th:href="@{/home}"> Home </a>
+                    </li>
+                    <li role="presentation"
+                        th:classappend="${#httpServletRequest.getRequestURI()=='/work/list'?'active':''}">
+                        <a th:href="@{/work/list}"> All Work Entries </a>
+                    </li>
+                    <li role="presentation"
+                        th:classappend="${#httpServletRequest.getRequestURI()=='/work/add'||
+                            #httpServletRequest.getRequestURI()=='/work/customer/add'||
+                            #httpServletRequest.getRequestURI()=='/work/project/add'
+                            ?'active':''}">
                         <a class="dropdown-toggle"
                            data-toggle="dropdown"
                            href="#"
@@ -39,7 +51,10 @@
                             <li role="presentation"><a th:href="@{/work/project/add}">Project</a></li>
                         </ul>
                     </li>
-                    <li role="presentation">
+                    <li role="presentation"
+                        th:classappend="${#httpServletRequest.getRequestURI()=='/work/customer/list'||
+                        #httpServletRequest.getRequestURI()=='/work/project/list'
+                        ?'active':''}">
                         <a class="dropdown-toggle"
                            data-toggle="dropdown"
                            href="#"
@@ -56,8 +71,14 @@
                 </ul>
 
                 <ul class="nav nav-tabs" sec:authorize="!isAuthenticated()">
-                    <li role="presentation"><a th:href="@{/login}">Login</a></li>
-                    <li role="presentation"><a th:href="@{/register}">Register</a></li>
+                    <li role="presentation"
+                        th:classappend="${#httpServletRequest.getRequestURI()=='/login'?'active':''}">
+                        <a th:href="@{/login}">Login</a>
+                    </li>
+                    <li role="presentation"
+                        th:classappend="${#httpServletRequest.getRequestURI()=='/register'?'active':''}">
+                        <a th:href="@{/register}">Register</a>
+                    </li>
                 </ul>
             </div>
             <div class="col-xs-2">

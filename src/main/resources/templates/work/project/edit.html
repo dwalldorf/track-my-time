@@ -16,7 +16,7 @@
                        name="id"
                        th:value="${project.id}"/>
                 <input type="hidden"
-                       th:if="${!#strings.isEmpty(user.id)}"
+                       th:if="${!#strings.isEmpty(project.userId)}"
                        name="userId"
                        th:value="${project.userId}"/>
 
