@@ -6,7 +6,7 @@
 
     <groupId>com.dwalldorf</groupId>
     <artifactId>track-my-time</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0-SNAPSHOT</version>
     <description>Time tracking app</description>
     <packaging>jar</packaging>
 
