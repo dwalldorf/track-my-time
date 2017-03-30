@@ -21,7 +21,7 @@ public class WorkEntryService {
     }
 
     public List<WorkEntry> findAllByUser(String userId) {
-        return workEntryRepository.findAllByUserId(userId);
+        return workEntryRepository.findAllByUserId_OrderByStartDesc(userId);
     }
 
     public WorkEntry findById(String id) {

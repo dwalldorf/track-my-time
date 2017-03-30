@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface WorkEntryRepository extends MongoRepository<WorkEntry, String> {
 
-    List<WorkEntry> findAllByUserId(String userId);
+    List<WorkEntry> findAllByUserId_OrderByStartDesc(String userId);
 }

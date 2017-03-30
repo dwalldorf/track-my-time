@@ -3,6 +3,7 @@ package com.dwalldorf.trackmytime.model;
 import java.io.Serializable;
 import org.joda.time.DateTime;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "work_entries")
@@ -11,12 +12,16 @@ public class WorkEntry implements HasUserId, Serializable {
     @Id
     private String id;
 
+    @Indexed
     private String userId;
 
+    @Indexed
     private String projectId;
 
+    @Indexed
     private String customerId;
 
+    @Indexed
     private DateTime start;
 
     private DateTime stop;
