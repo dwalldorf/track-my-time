@@ -76,6 +76,10 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    public User getCurrentUser() {
+        return userRepository.findOne(getCurrentUserId());
+    }
+
     public String getCurrentUserId() {
         return sessionService.getCurrentUserId();
     }
