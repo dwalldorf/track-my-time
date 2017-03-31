@@ -15,7 +15,7 @@ public class RouteUtilTest extends BaseTest {
     }
 
     @Test
-    public void redirectString() {
+    public void testRedirectString() {
         final String input = "/home";
         final String expectedOutput = "redirect:" + input;
 
