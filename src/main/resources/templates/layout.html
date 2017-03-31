@@ -52,9 +52,8 @@
                         </ul>
                     </li>
                     <li role="presentation"
-                        th:classappend="${#httpServletRequest.getRequestURI()=='/work/customer/list'||
-                        #httpServletRequest.getRequestURI()=='/work/project/list'
-                        ?'active':''}">
+                        th:classappend="${#httpServletRequest.getRequestURI()=='/work/customer/list' ||
+                        #httpServletRequest.getRequestURI()=='/work/project/list' ? 'active' : ''}">
                         <a class="dropdown-toggle"
                            data-toggle="dropdown"
                            href="#"
@@ -66,6 +65,7 @@
                         <ul class="dropdown-menu">
                             <li role="presentation"><a th:href="@{/work/customer/list}">Customers</a></li>
                             <li role="presentation"><a th:href="@{/work/project/list}">Projects</a></li>
+                            <li role="presentation"><a th:href="@{/user/edit}">My Profile</a></li>
                         </ul>
                     </li>
                 </ul>
