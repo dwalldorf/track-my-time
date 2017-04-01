@@ -32,15 +32,15 @@ public class WorkCustomerControllerTest extends BaseTest {
     @Test
     public void testAddPage_ViewName() {
         final String expectedViewName = "/work/customer/edit";
-        ModelAndView mav = customerController.addPage();
+        final ModelAndView mav = customerController.addPage();
 
         assertEquals(expectedViewName, mav.getViewName());
     }
 
     @Test
     public void testEditPage_ViewName() {
-        final String id = "58d7f5925ff8d846183ebbcc";
         final String expectedViewName = "/work/customer/edit";
+        final String id = "58d7f5925ff8d846183ebbcc";
         Customer mockPersistedCustomer = new Customer().setId(id);
         when(mockCustomerService.findById(eq(id))).thenReturn(mockPersistedCustomer);
 
