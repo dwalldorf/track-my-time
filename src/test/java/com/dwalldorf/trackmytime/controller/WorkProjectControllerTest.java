@@ -2,6 +2,7 @@ package com.dwalldorf.trackmytime.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -112,5 +113,10 @@ public class WorkProjectControllerTest extends BaseTest {
         projectController.delete(id);
 
         verify(mockProjectService).delete(eq(mockPersistedProject));
+    }
+
+    @Test
+    public void testViewNames() {
+        fail("write tests");
     }
 }
