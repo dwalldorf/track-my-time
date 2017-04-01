@@ -2,7 +2,6 @@ package com.dwalldorf.trackmytime.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -13,6 +12,7 @@ import com.dwalldorf.trackmytime.service.UserService;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.springframework.web.servlet.ModelAndView;
 
 public class WorkCustomerControllerTest extends BaseTest {
 
@@ -27,6 +27,26 @@ public class WorkCustomerControllerTest extends BaseTest {
     @Override
     protected void setUp() {
         this.customerController = new WorkCustomerController(mockCustomerService, mockUserService);
+    }
+
+    @Test
+    public void testAddPage_ViewName() {
+        final String expectedViewName = "/work/customer/edit";
+        ModelAndView mav = customerController.addPage();
+
+        assertEquals(expectedViewName, mav.getViewName());
+    }
+
+    @Test
+    public void testEditPage_ViewName() {
+        final String id = "58d7f5925ff8d846183ebbcc";
+        final String expectedViewName = "/work/customer/edit";
+        Customer mockPersistedCustomer = new Customer().setId(id);
+        when(mockCustomerService.findById(eq(id))).thenReturn(mockPersistedCustomer);
+
+        ModelAndView mav = customerController.editPage(id);
+
+        assertEquals(expectedViewName, mav.getViewName());
     }
 
     @Test
@@ -114,10 +134,5 @@ public class WorkCustomerControllerTest extends BaseTest {
         customerController.delete(id);
 
         verify(mockCustomerService).delete(eq(mockPersistedCustomer));
-    }
-
-    @Test
-    public void testViewNames() {
-        fail("write tests");
     }
 }
