@@ -15,15 +15,15 @@ public class IndexControllerTest extends BaseTest {
     }
 
     @Test
-    public void testIndex_ReturnsIndex() throws Exception {
-        final String expectedView = "index";
+    public void testIndex_ViewName() throws Exception {
+        final String expectedView = "/index";
         final String actualView = indexController.index();
 
         assertEquals(expectedView, actualView);
     }
 
     @Test
-    public void testHome_ReturnsSameAsIndex() throws Exception {
+    public void testHome_SameViewAsIndex() throws Exception {
         final String expectedView = indexController.index();
         final String actualView = indexController.home();
 

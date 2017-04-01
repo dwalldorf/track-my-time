@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import com.dwalldorf.trackmytime.BaseTest;
+import com.dwalldorf.trackmytime.forms.user.RegisterForm;
 import com.dwalldorf.trackmytime.service.CustomerService;
 import com.dwalldorf.trackmytime.service.UserService;
 import java.util.Map;
@@ -27,6 +28,14 @@ public class UserControllerTest extends BaseTest {
     }
 
     @Test
+    public void testRegisterPage_ViewName() {
+        final String expectedViewName = "/user/register";
+        final String actualViewName = userController.registerPage(new RegisterForm());
+
+        assertEquals(expectedViewName, actualViewName);
+    }
+
+    @Test
     public void testRegister() {
         fail("write test");
     }
@@ -40,7 +49,7 @@ public class UserControllerTest extends BaseTest {
     }
 
     @Test
-    public void testEditPage_View() {
+    public void testEditPage_ViewName() {
         final String expectedView = "/user/edit";
         final String viewName = userController.editPage().getViewName();
 
