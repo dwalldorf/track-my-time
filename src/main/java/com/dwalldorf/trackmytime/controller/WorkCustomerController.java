@@ -54,9 +54,8 @@ public class WorkCustomerController {
 
     @GetMapping(URI_CUSTOMER_ADD)
     public ModelAndView addPage() {
-        ModelAndView mav = new ModelAndView(VIEW_EDIT);
-        mav.addObject("customer", new Customer());
-        return mav;
+        return new ModelAndView(VIEW_EDIT)
+                .addObject("customer", new Customer());
     }
 
     @GetMapping(URI_CUSTOMER_EDIT)
