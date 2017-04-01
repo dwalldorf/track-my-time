@@ -21,7 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserController {
 
-    // TODO: make constants for view paths
+    private final static String VIEW_PREFIX = "/user/";
+    private final static String VIEW_REGISTER = VIEW_PREFIX + "register";
+    private final static String VIEW_EDIT = VIEW_PREFIX + "edit";
 
     private final UserService userService;
 
@@ -40,7 +42,7 @@ public class UserController {
 
     @GetMapping("/register")
     public String registerPage(@ModelAttribute RegisterForm registerForm) {
-        return "user/register";
+        return VIEW_REGISTER;
     }
 
     @PostMapping("/register")
@@ -58,13 +60,12 @@ public class UserController {
             return registerPage(registerForm);
         }
 
-        // TODO: use RouteUtil
-        return "redirect:/login";
+        return RouteUtil.redirectString("/login");
     }
 
     @GetMapping("/user/edit")
     public ModelAndView editPage() {
-        ModelAndView mav = new ModelAndView("user/edit");
+        ModelAndView mav = new ModelAndView(VIEW_EDIT);
 
         User user = userService.getCurrentUser();
         mav.addObject("user", user);
