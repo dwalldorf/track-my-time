@@ -44,6 +44,14 @@ public class WorkControllerTest extends BaseTest {
     }
 
     @Test
+    public void testAddPage_ViewName() {
+        final String expectedViewName = "/work/edit";
+        final String actualViewName = workController.addPage(new WorkEntryForm());
+
+        assertEquals(expectedViewName, actualViewName);
+    }
+
+    @Test
     public void testSave_NewEntry() {
         final String mockCurrentUserId = "58d7f5895ff8d846183ebbcb";
         when(mockUserService.getCurrentUserId()).thenReturn(mockCurrentUserId);
