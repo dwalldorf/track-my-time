@@ -31,8 +31,9 @@ public class WorkController {
     private static final String URI_WORK_EDIT = URI_WORK_PREFIX + "/{id}/edit";
     private static final String URI_WORK_DELETE = URI_WORK_PREFIX + "/{id}/delete";
 
-    private static final String VIEW_LIST = "work/list";
-    private static final String VIEW_EDIT = "work/edit";
+    private static final String VIEW_PREFIX = "/work/";
+    private static final String VIEW_LIST = VIEW_PREFIX + "list";
+    private static final String VIEW_EDIT = VIEW_PREFIX + "edit";
 
     private final UserService userService;
 

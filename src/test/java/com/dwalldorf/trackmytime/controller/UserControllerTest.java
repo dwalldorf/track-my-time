@@ -2,7 +2,6 @@ package com.dwalldorf.trackmytime.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import com.dwalldorf.trackmytime.BaseTest;
 import com.dwalldorf.trackmytime.forms.user.RegisterForm;
@@ -34,16 +33,6 @@ public class UserControllerTest extends BaseTest {
 
         assertEquals(expectedViewName, actualViewName);
     }
-    
-    @Test
-    public void testRegister_BindingResultError() {
-        
-    }
-
-    @Test
-    public void testRegister() {
-        fail("write test");
-    }
 
     @Test
     public void testEditPage_Model() {
@@ -59,10 +48,5 @@ public class UserControllerTest extends BaseTest {
         final String viewName = userController.editPage().getViewName();
 
         assertEquals(expectedView, viewName);
-    }
-
-    @Test
-    public void testUpdate() {
-        fail("write test");
     }
 }

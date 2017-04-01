@@ -2,7 +2,6 @@ package com.dwalldorf.trackmytime.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -16,6 +15,7 @@ import com.dwalldorf.trackmytime.service.WorkEntryService;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.springframework.web.servlet.ModelAndView;
 
 public class WorkControllerTest extends BaseTest {
 
@@ -101,6 +101,18 @@ public class WorkControllerTest extends BaseTest {
     }
 
     @Test
+    public void testEditPage_ViewName() {
+        final String expectedViewName = "/work/edit";
+        final String id = "58d7f5925ff8d846183ebbcc";
+        WorkEntry mockPersistedEntry = new WorkEntry().setId(id);
+        when(mockWorkEntryService.findById(eq(id))).thenReturn(mockPersistedEntry);
+
+        ModelAndView mav = workController.editPage(id);
+
+        assertEquals(expectedViewName, mav.getViewName());
+    }
+
+    @Test
     public void testEditPage_VerifiesResourceOwner() {
         final String id = "58d7f5925ff8d846183ebbcc";
         WorkEntry mockPersistedEntry = new WorkEntry().setId(id);
@@ -131,11 +143,6 @@ public class WorkControllerTest extends BaseTest {
         workController.delete(id);
 
         verify(mockUserService).verifyOwner(eq(mockPersistedEntry));
-    }
-
-    @Test
-    public void testViewNames() {
-        fail("write tests");
     }
 
     private WorkEntry createWorkEntry() {
