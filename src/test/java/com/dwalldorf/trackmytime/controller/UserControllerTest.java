@@ -34,6 +34,11 @@ public class UserControllerTest extends BaseTest {
 
         assertEquals(expectedViewName, actualViewName);
     }
+    
+    @Test
+    public void testRegister_BindingResultError() {
+        
+    }
 
     @Test
     public void testRegister() {
