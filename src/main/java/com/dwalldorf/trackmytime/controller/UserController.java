@@ -81,6 +81,6 @@ public class UserController {
     @PostMapping(ROUTE_ACTION_EDIT)
     public String update() {
         // TODO: save user
-        return RouteUtil.redirectString("/user/edit");
+        return RouteUtil.redirectString(ROUTE_PAGE_EDIT);
     }
 }
