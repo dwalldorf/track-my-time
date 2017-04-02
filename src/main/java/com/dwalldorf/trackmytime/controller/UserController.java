@@ -21,6 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserController {
 
+    private static final String ROUTE_PAGE_REGISTER = "/register";
+    private static final String ROUTE_ACTION_REGISTER = "/register";
+    private static final String ROUTE_PAGE_EDIT = "/user/edit";
+    private static final String ROUTE_ACTION_EDIT = "/user/edit";
+
     private final static String VIEW_PREFIX = "/user/";
     private final static String VIEW_REGISTER = VIEW_PREFIX + "register";
     private final static String VIEW_EDIT = VIEW_PREFIX + "edit";
@@ -40,12 +45,12 @@ public class UserController {
         return customerService.findAllByUser(userService.getCurrentUserId());
     }
 
-    @GetMapping("/register")
+    @GetMapping(ROUTE_PAGE_REGISTER)
     public String registerPage(@ModelAttribute RegisterForm registerForm) {
         return VIEW_REGISTER;
     }
 
-    @PostMapping("/register")
+    @PostMapping(ROUTE_ACTION_REGISTER)
     public String register(@Valid RegisterForm registerForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return registerPage(registerForm);
@@ -63,7 +68,7 @@ public class UserController {
         return RouteUtil.redirectString("/login");
     }
 
-    @GetMapping("/user/edit")
+    @GetMapping(ROUTE_PAGE_EDIT)
     public ModelAndView editPage() {
         ModelAndView mav = new ModelAndView(VIEW_EDIT);
 
@@ -73,7 +78,7 @@ public class UserController {
         return mav;
     }
 
-    @PostMapping("/user/edit")
+    @PostMapping(ROUTE_ACTION_EDIT)
     public String update() {
         // TODO: save user
         return RouteUtil.redirectString("/user/edit");

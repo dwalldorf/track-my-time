@@ -16,12 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class WorkCustomerController {
 
-    private static final String URI_PREFIX = "/work/customer";
+    private static final String ROUTE_PREFIX = "/work/customer";
 
-    private static final String URI_CUSTOMER_LIST = URI_PREFIX + "/list";
-    private static final String URI_CUSTOMER_ADD = URI_PREFIX + "/add";
-    private static final String URI_CUSTOMER_EDIT = URI_PREFIX + "/{id}/edit";
-    private static final String URI_CUSTOMER_DELETE = URI_PREFIX + "/{id}/delete";
+    private static final String ROUTE_PAGE_LIST = ROUTE_PREFIX + "/list";
+    private static final String ROUTE_PAGE_ADD = ROUTE_PREFIX + "/add";
+    private static final String ROUTE_PAGE_EDIT = ROUTE_PREFIX + "/{id}/edit";
+    private static final String ROUTE_ACTION_DELETE = ROUTE_PREFIX + "/{id}/delete";
 
     private final static String VIEW_PREFIX = "/work/customer/";
     private final static String VIEW_EDIT = VIEW_PREFIX + "edit";
@@ -42,23 +42,23 @@ public class WorkCustomerController {
         return customerService.findAllByUser(userService.getCurrentUserId());
     }
 
-    @GetMapping(URI_PREFIX)
+    @GetMapping(ROUTE_PREFIX)
     public String indexRedirect() {
-        return RouteUtil.redirectString(URI_CUSTOMER_LIST);
+        return RouteUtil.redirectString(ROUTE_PAGE_LIST);
     }
 
-    @GetMapping(URI_CUSTOMER_LIST)
+    @GetMapping(ROUTE_PAGE_LIST)
     public String listPage() {
         return VIEW_LIST;
     }
 
-    @GetMapping(URI_CUSTOMER_ADD)
+    @GetMapping(ROUTE_PAGE_ADD)
     public ModelAndView addPage() {
         return new ModelAndView(VIEW_EDIT)
                 .addObject("customer", new Customer());
     }
 
-    @GetMapping(URI_CUSTOMER_EDIT)
+    @GetMapping(ROUTE_PAGE_EDIT)
     public ModelAndView editPage(@PathVariable String id) {
         Customer customer = customerService.findById(id);
 
@@ -69,7 +69,7 @@ public class WorkCustomerController {
         return mav;
     }
 
-    @PostMapping(URI_PREFIX)
+    @PostMapping(ROUTE_PREFIX)
     public String save(@ModelAttribute Customer customer) {
         if (customer.getId() == null) {
             customer.setUserId(userService.getCurrentUserId());
@@ -79,16 +79,16 @@ public class WorkCustomerController {
         }
         customerService.save(customer);
 
-        return RouteUtil.redirectString(URI_CUSTOMER_LIST);
+        return RouteUtil.redirectString(ROUTE_PAGE_LIST);
     }
 
-    @GetMapping(URI_CUSTOMER_DELETE)
+    @GetMapping(ROUTE_ACTION_DELETE)
     public String delete(@PathVariable String id) {
         Customer customer = customerService.findById(id);
         userService.verifyOwner(customer);
 
         customerService.delete(customer);
 
-        return RouteUtil.redirectString(URI_CUSTOMER_LIST);
+        return RouteUtil.redirectString(ROUTE_PAGE_LIST);
     }
 }

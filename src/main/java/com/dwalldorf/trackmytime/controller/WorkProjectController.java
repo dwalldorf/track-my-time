@@ -16,12 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class WorkProjectController {
 
-    private static final String URI_PREFIX = "/work/project";
+    private static final String ROUTE_PREFIX = "/work/project";
 
-    private static final String URI_PROJECT_LIST = URI_PREFIX + "/list";
-    private static final String URI_PROJECT_ADD = URI_PREFIX + "/add";
-    private static final String URI_PROJECT_EDIT = URI_PREFIX + "/{id}/edit";
-    private static final String URI_PROJECT_DELETE = URI_PREFIX + "/{id}/delete";
+    private static final String ROUTE_PAGE_LIST = ROUTE_PREFIX + "/list";
+    private static final String ROUTE_PAGE_ADD = ROUTE_PREFIX + "/add";
+    private static final String ROUTE_PAGE_EDIT = ROUTE_PREFIX + "/{id}/edit";
+    private static final String ROUTE_ACTION_DELETE = ROUTE_PREFIX + "/{id}/delete";
 
     private final static String VIEW_PREFIX = "/work/project/";
     private final static String VIEW_EDIT = VIEW_PREFIX + "edit";
@@ -42,24 +42,24 @@ public class WorkProjectController {
         return projectService.findAllByUser(userService.getCurrentUserId());
     }
 
-    @GetMapping(URI_PREFIX)
+    @GetMapping(ROUTE_PREFIX)
     public String indexRedirect() {
-        return RouteUtil.redirectString(URI_PROJECT_LIST);
+        return RouteUtil.redirectString(ROUTE_PAGE_LIST);
     }
 
-    @GetMapping(URI_PROJECT_LIST)
+    @GetMapping(ROUTE_PAGE_LIST)
     public String listPage() {
         return VIEW_LIST;
     }
 
-    @GetMapping(URI_PROJECT_ADD)
+    @GetMapping(ROUTE_PAGE_ADD)
     public ModelAndView addPage() {
         ModelAndView mav = new ModelAndView(VIEW_EDIT);
         mav.addObject("project", new Project());
         return mav;
     }
 
-    @GetMapping(URI_PROJECT_EDIT)
+    @GetMapping(ROUTE_PAGE_EDIT)
     public ModelAndView editPage(@PathVariable String id) {
         Project project = projectService.findById(id);
 
@@ -70,7 +70,7 @@ public class WorkProjectController {
         return mav;
     }
 
-    @PostMapping(URI_PREFIX)
+    @PostMapping(ROUTE_PREFIX)
     public String save(@ModelAttribute Project project) {
         if (project.getId() == null) {
             project.setUserId(userService.getCurrentUserId());
@@ -81,16 +81,16 @@ public class WorkProjectController {
 
         projectService.save(project);
 
-        return RouteUtil.redirectString(URI_PROJECT_LIST);
+        return RouteUtil.redirectString(ROUTE_PAGE_LIST);
     }
 
-    @GetMapping(URI_PROJECT_DELETE)
+    @GetMapping(ROUTE_ACTION_DELETE)
     public String delete(@PathVariable String id) {
         Project project = projectService.findById(id);
 
         userService.verifyOwner(project);
         projectService.delete(project);
 
-        return RouteUtil.redirectString(URI_PROJECT_LIST);
+        return RouteUtil.redirectString(ROUTE_PAGE_LIST);
     }
 }
