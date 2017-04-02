@@ -34,6 +34,10 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
     /**
      * Creates a user. Will encode the password and set registration date.
      *

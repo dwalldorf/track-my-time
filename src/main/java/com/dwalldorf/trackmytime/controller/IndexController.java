@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
-    private static final String ROUTE_PAGE_INDEX = "/";
+    public static final String ROUTE_PAGE_INDEX = "/";
     private static final String ROUTE_PAGE_HOME = "/home";
 
     private static final String VIEW_NAME = "/index";

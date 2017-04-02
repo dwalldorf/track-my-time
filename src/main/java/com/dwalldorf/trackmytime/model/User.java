@@ -36,6 +36,8 @@ public class User implements Serializable {
 
     private Boolean confirmedEmail = false;
 
+    private String defaultCustomerId;
+
     public String getId() {
         return id;
     }
@@ -105,6 +107,15 @@ public class User implements Serializable {
 
     public User setConfirmedEmail(Boolean confirmedEmail) {
         this.confirmedEmail = confirmedEmail;
+        return this;
+    }
+
+    public String getDefaultCustomerId() {
+        return defaultCustomerId;
+    }
+
+    public User setDefaultCustomerId(String defaultCustomerId) {
+        this.defaultCustomerId = defaultCustomerId;
         return this;
     }
 }

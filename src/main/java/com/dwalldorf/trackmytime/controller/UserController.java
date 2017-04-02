@@ -2,6 +2,7 @@ package com.dwalldorf.trackmytime.controller;
 
 import com.dwalldorf.trackmytime.exception.InvalidFormInputException;
 import com.dwalldorf.trackmytime.forms.user.RegisterForm;
+import com.dwalldorf.trackmytime.forms.user.UserForm;
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.model.User;
 import com.dwalldorf.trackmytime.service.CustomerService;
@@ -73,14 +74,22 @@ public class UserController {
         ModelAndView mav = new ModelAndView(VIEW_EDIT);
 
         User user = userService.getCurrentUser();
-        mav.addObject("user", user);
+        mav.addObject("userForm", UserForm.fromEntry(user));
 
         return mav;
     }
 
     @PostMapping(ROUTE_ACTION_EDIT)
-    public String update() {
-        // TODO: save user
-        return RouteUtil.redirectString(ROUTE_PAGE_EDIT);
+    public String update(@ModelAttribute @Valid UserForm userForm) {
+        userService.verifyOwner(userForm);
+
+        User user = userService.getCurrentUser();
+        user.setUsername(userForm.getUsername())
+            .setEmail(userForm.getEmail())
+            .setDefaultCustomerId(user.getDefaultCustomerId());
+
+        userService.save(user);
+
+        return RouteUtil.redirectString(IndexController.ROUTE_PAGE_INDEX);
     }
 }

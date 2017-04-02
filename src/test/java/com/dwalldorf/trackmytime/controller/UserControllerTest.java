@@ -2,9 +2,11 @@ package com.dwalldorf.trackmytime.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 import com.dwalldorf.trackmytime.BaseTest;
 import com.dwalldorf.trackmytime.forms.user.RegisterForm;
+import com.dwalldorf.trackmytime.model.User;
 import com.dwalldorf.trackmytime.service.CustomerService;
 import com.dwalldorf.trackmytime.service.UserService;
 import java.util.Map;
@@ -36,14 +38,20 @@ public class UserControllerTest extends BaseTest {
 
     @Test
     public void testEditPage_Model() {
+        User mockCurrentUser = new User();
+        when(mockUserService.getCurrentUser()).thenReturn(mockCurrentUser);
+
         final String expectedUserModelKey = "user";
         final Map<String, Object> model = userController.editPage().getModel();
 
         assertTrue(model.containsKey(expectedUserModelKey));
+        assertEquals(mockCurrentUser, model.get(expectedUserModelKey));
     }
 
     @Test
     public void testEditPage_ViewName() {
+        when(mockUserService.getCurrentUser()).thenReturn(new User());
+
         final String expectedView = "/user/edit";
         final String viewName = userController.editPage().getViewName();
 
