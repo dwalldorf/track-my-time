@@ -9,6 +9,7 @@ import com.dwalldorf.trackmytime.BaseTest;
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.service.CustomerService;
 import com.dwalldorf.trackmytime.service.UserService;
+import com.dwalldorf.trackmytime.util.RouteUtil;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -27,6 +28,14 @@ public class WorkCustomerControllerTest extends BaseTest {
     @Override
     protected void setUp() {
         this.customerController = new WorkCustomerController(mockCustomerService, mockUserService);
+    }
+
+    @Test
+    public void testIndexRedirect() {
+        final String expectedRedirect = RouteUtil.redirectString("/work/customer/list");
+        final String actualRedirect = customerController.indexRedirect();
+
+        assertEquals(expectedRedirect, actualRedirect);
     }
 
     @Test
