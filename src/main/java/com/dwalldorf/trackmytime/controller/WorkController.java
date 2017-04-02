@@ -27,7 +27,7 @@ public class WorkController {
     private static final String ROUTE_PREFIX = "/work";
 
     private static final String ROUTE_PAGE_ADD = ROUTE_PREFIX + "/add";
-    private static final String ROUTE_PAGE_LIST = ROUTE_PREFIX + "/list";
+    public static final String ROUTE_PAGE_LIST = ROUTE_PREFIX + "/list";
     private static final String ROUTE_PAGE_EDIT = ROUTE_PREFIX + "/{id}/edit";
     private static final String ROUTE_ACTION_DELETE = ROUTE_PREFIX + "/{id}/delete";
 

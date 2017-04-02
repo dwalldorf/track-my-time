@@ -1,5 +1,6 @@
 package com.dwalldorf.trackmytime.controller;
 
+import com.dwalldorf.trackmytime.util.RouteUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -7,17 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
 
     public static final String ROUTE_PAGE_INDEX = "/";
-    private static final String ROUTE_PAGE_HOME = "/home";
-
-    private static final String VIEW_NAME = "/index";
 
     @GetMapping(ROUTE_PAGE_INDEX)
     public String index() {
-        return VIEW_NAME;
-    }
-
-    @GetMapping(ROUTE_PAGE_HOME)
-    public String home() {
-        return VIEW_NAME;
+        return RouteUtil.redirectString(WorkController.ROUTE_PAGE_LIST);
     }
 }
