@@ -24,12 +24,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class WorkController {
 
-    private static final String ROUTE_WORK_PREFIX = "/work";
+    private static final String ROUTE_PREFIX = "/work";
 
-    private static final String ROUTE_PAGE_ADD = ROUTE_WORK_PREFIX + "/add";
-    private static final String ROUTE_PAGE_LIST = ROUTE_WORK_PREFIX + "/list";
-    private static final String ROUTE_PAGE_EDIT = ROUTE_WORK_PREFIX + "/{id}/edit";
-    private static final String ROUTE_ACTION_DELETE = ROUTE_WORK_PREFIX + "/{id}/delete";
+    private static final String ROUTE_PAGE_ADD = ROUTE_PREFIX + "/add";
+    private static final String ROUTE_PAGE_LIST = ROUTE_PREFIX + "/list";
+    private static final String ROUTE_PAGE_EDIT = ROUTE_PREFIX + "/{id}/edit";
+    private static final String ROUTE_ACTION_DELETE = ROUTE_PREFIX + "/{id}/delete";
 
     private static final String VIEW_PREFIX = "/work/";
     private static final String VIEW_LIST = VIEW_PREFIX + "list";
@@ -74,7 +74,10 @@ public class WorkController {
         return projectService.findAllByUser(userService.getCurrentUserId());
     }
 
-    // TODO: add indexRedirect
+    @GetMapping(ROUTE_PREFIX)
+    public String indexRedirect() {
+        return RouteUtil.redirectString(ROUTE_PAGE_LIST);
+    }
 
     @GetMapping(ROUTE_PAGE_LIST)
     public String listPage() {
@@ -99,7 +102,7 @@ public class WorkController {
         return mav;
     }
 
-    @PostMapping(ROUTE_WORK_PREFIX)
+    @PostMapping(ROUTE_PREFIX)
     public String save(@ModelAttribute WorkEntryForm workEntryForm) {
         WorkEntry workEntry = workEntryForm.toWorkEntry();
         if (workEntry.getId() == null) {
