@@ -41,11 +41,10 @@ public class UserControllerTest extends BaseTest {
         User mockCurrentUser = new User();
         when(mockUserService.getCurrentUser()).thenReturn(mockCurrentUser);
 
-        final String expectedUserModelKey = "user";
+        final String expectedUserModelKey = "userForm";
         final Map<String, Object> model = userController.editPage().getModel();
 
         assertTrue(model.containsKey(expectedUserModelKey));
-        assertEquals(mockCurrentUser, model.get(expectedUserModelKey));
     }
 
     @Test
