@@ -2,21 +2,22 @@ package com.dwalldorf.trackmytime.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
 public class IndexController {
 
-    private static final String URI_HOME = "/home";
+    public static final String ROUTE_PAGE_INDEX = "/";
+    private static final String ROUTE_PAGE_HOME = "/home";
 
-    @GetMapping
+    private static final String VIEW_NAME = "/index";
+
+    @GetMapping(ROUTE_PAGE_INDEX)
     public String index() {
-        return "index";
+        return VIEW_NAME;
     }
 
-    @GetMapping(URI_HOME)
+    @GetMapping(ROUTE_PAGE_HOME)
     public String home() {
-        return index();
+        return VIEW_NAME;
     }
 }

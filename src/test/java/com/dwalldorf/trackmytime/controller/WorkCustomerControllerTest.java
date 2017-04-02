@@ -9,9 +9,11 @@ import com.dwalldorf.trackmytime.BaseTest;
 import com.dwalldorf.trackmytime.model.Customer;
 import com.dwalldorf.trackmytime.service.CustomerService;
 import com.dwalldorf.trackmytime.service.UserService;
+import com.dwalldorf.trackmytime.util.RouteUtil;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.springframework.web.servlet.ModelAndView;
 
 public class WorkCustomerControllerTest extends BaseTest {
 
@@ -26,6 +28,34 @@ public class WorkCustomerControllerTest extends BaseTest {
     @Override
     protected void setUp() {
         this.customerController = new WorkCustomerController(mockCustomerService, mockUserService);
+    }
+
+    @Test
+    public void testIndexRedirect() {
+        final String expectedRedirect = RouteUtil.redirectString("/work/customer/list");
+        final String actualRedirect = customerController.indexRedirect();
+
+        assertEquals(expectedRedirect, actualRedirect);
+    }
+
+    @Test
+    public void testAddPage_ViewName() {
+        final String expectedViewName = "/work/customer/edit";
+        final ModelAndView mav = customerController.addPage();
+
+        assertEquals(expectedViewName, mav.getViewName());
+    }
+
+    @Test
+    public void testEditPage_ViewName() {
+        final String expectedViewName = "/work/customer/edit";
+        final String id = "58d7f5925ff8d846183ebbcc";
+        Customer mockPersistedCustomer = new Customer().setId(id);
+        when(mockCustomerService.findById(eq(id))).thenReturn(mockPersistedCustomer);
+
+        ModelAndView mav = customerController.editPage(id);
+
+        assertEquals(expectedViewName, mav.getViewName());
     }
 
     @Test

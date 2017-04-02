@@ -9,9 +9,11 @@ import com.dwalldorf.trackmytime.BaseTest;
 import com.dwalldorf.trackmytime.model.Project;
 import com.dwalldorf.trackmytime.service.ProjectService;
 import com.dwalldorf.trackmytime.service.UserService;
+import com.dwalldorf.trackmytime.util.RouteUtil;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.springframework.web.servlet.ModelAndView;
 
 public class WorkProjectControllerTest extends BaseTest {
 
@@ -26,6 +28,34 @@ public class WorkProjectControllerTest extends BaseTest {
     @Override
     protected void setUp() {
         this.projectController = new WorkProjectController(mockProjectService, mockUserService);
+    }
+
+    @Test
+    public void testIndexRedirect() {
+        final String expectedRedirect = RouteUtil.redirectString("/work/project/list");
+        final String actualRedirect = projectController.indexRedirect();
+
+        assertEquals(expectedRedirect, actualRedirect);
+    }
+
+    @Test
+    public void testAddPage_ViewName() {
+        final String expectedViewName = "/work/project/edit";
+        final ModelAndView mav = projectController.addPage();
+
+        assertEquals(expectedViewName, mav.getViewName());
+    }
+
+    @Test
+    public void testEditPage_ViewName() {
+        final String expectedViewName = "/work/project/edit";
+        final String id = "58d7f5925ff8d846183ebbcc";
+        Project mockPersistedProject = new Project().setId(id);
+        when(mockProjectService.findById(eq(id))).thenReturn(mockPersistedProject);
+
+        final ModelAndView mav = projectController.editPage(id);
+
+        assertEquals(expectedViewName, mav.getViewName());
     }
 
     @Test
@@ -62,7 +92,7 @@ public class WorkProjectControllerTest extends BaseTest {
         when(mockUserService.getCurrentUserId()).thenReturn(mockCurrentUserId);
         Project project = new Project();
         project.setId("2c11acf45ff8d8461834f299")
-                .setUserId(mockCurrentUserId);
+               .setUserId(mockCurrentUserId);
 
         when(mockProjectService.findById(eq(project.getId()))).thenReturn(project);
 

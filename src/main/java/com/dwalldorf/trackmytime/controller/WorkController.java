@@ -24,15 +24,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class WorkController {
 
-    private static final String URI_WORK_PREFIX = "/work";
+    private static final String ROUTE_PREFIX = "/work";
 
-    private static final String URI_WORK_ADD = URI_WORK_PREFIX + "/add";
-    private static final String URI_WORK_LIST = URI_WORK_PREFIX + "/list";
-    private static final String URI_WORK_EDIT = URI_WORK_PREFIX + "/{id}/edit";
-    private static final String URI_WORK_DELETE = URI_WORK_PREFIX + "/{id}/delete";
+    private static final String ROUTE_PAGE_ADD = ROUTE_PREFIX + "/add";
+    private static final String ROUTE_PAGE_LIST = ROUTE_PREFIX + "/list";
+    private static final String ROUTE_PAGE_EDIT = ROUTE_PREFIX + "/{id}/edit";
+    private static final String ROUTE_ACTION_DELETE = ROUTE_PREFIX + "/{id}/delete";
 
-    private static final String VIEW_LIST = "work/list";
-    private static final String VIEW_EDIT = "work/edit";
+    private static final String VIEW_PREFIX = "/work/";
+    private static final String VIEW_LIST = VIEW_PREFIX + "list";
+    private static final String VIEW_EDIT = VIEW_PREFIX + "edit";
 
     private final UserService userService;
 
@@ -73,18 +74,23 @@ public class WorkController {
         return projectService.findAllByUser(userService.getCurrentUserId());
     }
 
-    @GetMapping(URI_WORK_LIST)
+    @GetMapping(ROUTE_PREFIX)
+    public String indexRedirect() {
+        return RouteUtil.redirectString(ROUTE_PAGE_LIST);
+    }
+
+    @GetMapping(ROUTE_PAGE_LIST)
     public String listPage() {
         return VIEW_LIST;
     }
 
-    @GetMapping(URI_WORK_ADD)
+    @GetMapping(ROUTE_PAGE_ADD)
     public String addPage(@ModelAttribute("workEntryForm") WorkEntryForm workEntryForm) {
         workEntryForm.setUserId(userService.getCurrentUserId());
         return VIEW_EDIT;
     }
 
-    @GetMapping(URI_WORK_EDIT)
+    @GetMapping(ROUTE_PAGE_EDIT)
     public ModelAndView editPage(@PathVariable String id) {
         WorkEntry workEntry = workEntryService.findById(id);
 
@@ -96,7 +102,7 @@ public class WorkController {
         return mav;
     }
 
-    @PostMapping(URI_WORK_PREFIX)
+    @PostMapping(ROUTE_PREFIX)
     public String save(@ModelAttribute WorkEntryForm workEntryForm) {
         WorkEntry workEntry = workEntryForm.toWorkEntry();
         if (workEntry.getId() == null) {
@@ -117,16 +123,16 @@ public class WorkController {
 
         workEntryService.save(workEntry);
 
-        return RouteUtil.redirectString(URI_WORK_LIST);
+        return RouteUtil.redirectString(ROUTE_PAGE_LIST);
     }
 
-    @GetMapping(URI_WORK_DELETE)
+    @GetMapping(ROUTE_ACTION_DELETE)
     public String delete(@PathVariable String id) {
         WorkEntry workEntry = workEntryService.findById(id);
 
         userService.verifyOwner(workEntry);
 
         workEntryService.delete(workEntry);
-        return RouteUtil.redirectString(URI_WORK_LIST);
+        return RouteUtil.redirectString(ROUTE_PAGE_LIST);
     }
 }

@@ -1,33 +1,26 @@
-package com.dwalldorf.trackmytime.model;
+package com.dwalldorf.trackmytime.forms.user;
 
+import com.dwalldorf.trackmytime.model.HasUserId;
+import com.dwalldorf.trackmytime.model.User;
 import java.io.Serializable;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
-import org.mongodb.morphia.annotations.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "users")
-public class User implements Serializable {
+public class UserForm implements HasUserId, Serializable {
 
-    @Id
     private String id;
 
-    @NotEmpty
-    @Size(min = 3, max = 40)
-    @Indexed(unique = true)
+    @Size(min = 3, max = 40, message = "length must be between 3 and 40 characters")
     private String username;
 
-    @Email
-    @NotEmpty
+    @NotEmpty(message = "email is mandatory")
+    @Email(message = "not a valid email")
     private String email;
 
-    @NotEmpty
     private String password;
 
-    @NotEmpty
     private DateTime registration;
 
     private DateTime firstLogin;
@@ -38,11 +31,31 @@ public class User implements Serializable {
 
     private String defaultCustomerId;
 
+    public static UserForm fromEntry(User user) {
+        return new UserForm()
+                .setId(user.getId())
+                .setUsername(user.getUsername())
+                .setEmail(user.getEmail())
+                .setRegistration(user.getRegistration())
+                .setFirstLogin(user.getFirstLogin())
+                .setDefaultCustomerId(user.getDefaultCustomerId());
+    }
+
+    @Override
+    public String getUserId() {
+        return id;
+    }
+
+    @Override
+    public String getObjectType() {
+        return "UserForm";
+    }
+
     public String getId() {
         return id;
     }
 
-    public User setId(String id) {
+    public UserForm setId(String id) {
         this.id = id;
         return this;
     }
@@ -51,7 +64,7 @@ public class User implements Serializable {
         return username;
     }
 
-    public User setUsername(String username) {
+    public UserForm setUsername(String username) {
         this.username = username;
         return this;
     }
@@ -60,7 +73,7 @@ public class User implements Serializable {
         return email;
     }
 
-    public User setEmail(String email) {
+    public UserForm setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -69,7 +82,7 @@ public class User implements Serializable {
         return password;
     }
 
-    public User setPassword(String password) {
+    public UserForm setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -78,7 +91,7 @@ public class User implements Serializable {
         return registration;
     }
 
-    public User setRegistration(DateTime registration) {
+    public UserForm setRegistration(DateTime registration) {
         this.registration = registration;
         return this;
     }
@@ -87,7 +100,7 @@ public class User implements Serializable {
         return firstLogin;
     }
 
-    public User setFirstLogin(DateTime firstLogin) {
+    public UserForm setFirstLogin(DateTime firstLogin) {
         this.firstLogin = firstLogin;
         return this;
     }
@@ -96,7 +109,7 @@ public class User implements Serializable {
         return lastLogin;
     }
 
-    public User setLastLogin(DateTime lastLogin) {
+    public UserForm setLastLogin(DateTime lastLogin) {
         this.lastLogin = lastLogin;
         return this;
     }
@@ -105,7 +118,7 @@ public class User implements Serializable {
         return confirmedEmail;
     }
 
-    public User setConfirmedEmail(Boolean confirmedEmail) {
+    public UserForm setConfirmedEmail(Boolean confirmedEmail) {
         this.confirmedEmail = confirmedEmail;
         return this;
     }
@@ -114,7 +127,7 @@ public class User implements Serializable {
         return defaultCustomerId;
     }
 
-    public User setDefaultCustomerId(String defaultCustomerId) {
+    public UserForm setDefaultCustomerId(String defaultCustomerId) {
         this.defaultCustomerId = defaultCustomerId;
         return this;
     }

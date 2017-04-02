@@ -165,9 +165,6 @@ public class WorkEntryForm implements Serializable {
     }
 
     public boolean missingStop() {
-        if (start == null) {
-            return false;
-        }
-        return stop == null;
+        return start != null && stop == null;
     }
 }

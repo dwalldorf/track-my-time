@@ -12,9 +12,11 @@ import com.dwalldorf.trackmytime.service.CustomerService;
 import com.dwalldorf.trackmytime.service.ProjectService;
 import com.dwalldorf.trackmytime.service.UserService;
 import com.dwalldorf.trackmytime.service.WorkEntryService;
+import com.dwalldorf.trackmytime.util.RouteUtil;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.springframework.web.servlet.ModelAndView;
 
 public class WorkControllerTest extends BaseTest {
 
@@ -40,6 +42,22 @@ public class WorkControllerTest extends BaseTest {
                 mockCustomerService,
                 mockProjectService
         );
+    }
+
+    @Test
+    public void testIndexRedirect() {
+        final String expectedRedirect = RouteUtil.redirectString("/work/list");
+        final String actualRedirect = workController.indexRedirect();
+
+        assertEquals(expectedRedirect, actualRedirect);
+    }
+
+    @Test
+    public void testAddPage_ViewName() {
+        final String expectedViewName = "/work/edit";
+        final String actualViewName = workController.addPage(new WorkEntryForm());
+
+        assertEquals(expectedViewName, actualViewName);
     }
 
     @Test
@@ -97,6 +115,18 @@ public class WorkControllerTest extends BaseTest {
         workController.save(WorkEntryForm.fromWorkEntry(workEntry));
 
         verify(mockUserService).verifyOwner(eq(workEntry));
+    }
+
+    @Test
+    public void testEditPage_ViewName() {
+        final String expectedViewName = "/work/edit";
+        final String id = "58d7f5925ff8d846183ebbcc";
+        WorkEntry mockPersistedEntry = new WorkEntry().setId(id);
+        when(mockWorkEntryService.findById(eq(id))).thenReturn(mockPersistedEntry);
+
+        ModelAndView mav = workController.editPage(id);
+
+        assertEquals(expectedViewName, mav.getViewName());
     }
 
     @Test

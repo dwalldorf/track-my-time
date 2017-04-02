@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout::html-head('Edit My Profile')"></head>
+<body>
+<header th:replace="layout::site-header"></header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 class="col-xs-offset-2">My Profile</h1>
+
+            <form th:action="@{/login}" th:object="${userForm}" method="post" class="form-horizontal">
+                <div class="form-group">
+                    <label for="username" class="col-xs-2 control-label">Username:</label>
+                    <div class="col-xs-10 col-md-4">
+                        <input type="text"
+                               class="form-control"
+                               id="username"
+                               name="username"
+                               th:field="*{username}"
+                               placeholder="Username"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="col-xs-2 control-label">E-Mail:</label>
+                    <div class="col-xs-10 col-md-4">
+                        <input type="text"
+                               class="form-control"
+                               id="email"
+                               name="email"
+                               th:field="*{email}"
+                               placeholder="jon@doe.tld"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="defaultCustomer" class="col-xs-2 control-label">Defaul Customer:</label>
+                    <div class="col-xs-10 col-md-4">
+                        <select th:field="*{defaultCustomerId}"
+                                name="defaultCustomerId"
+                                id="defaultCustomer"
+                                class="form-control">
+                            <option th:each="customer : ${allCustomers}"
+                                    th:value="${customer.id}"
+                                    th:text="${customer.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        <input type="submit" value="Save" class="btn btn-primary"/>
+                        <a th:href="@{/}" class="btn btn-default">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout::site-footer"></footer>
+</body>
+</html>

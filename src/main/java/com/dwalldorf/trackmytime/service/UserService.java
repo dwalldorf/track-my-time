@@ -34,6 +34,10 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
     /**
      * Creates a user. Will encode the password and set registration date.
      *
@@ -74,6 +78,10 @@ public class UserService implements UserDetailsService {
                 Collections.singletonList(new SimpleGrantedAuthority("USER")),
                 user.getId()
         );
+    }
+
+    public User getCurrentUser() {
+        return userRepository.findOne(getCurrentUserId());
     }
 
     public String getCurrentUserId() {
