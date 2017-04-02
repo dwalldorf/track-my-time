@@ -9,6 +9,7 @@ import com.dwalldorf.trackmytime.BaseTest;
 import com.dwalldorf.trackmytime.model.Project;
 import com.dwalldorf.trackmytime.service.ProjectService;
 import com.dwalldorf.trackmytime.service.UserService;
+import com.dwalldorf.trackmytime.util.RouteUtil;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -27,6 +28,14 @@ public class WorkProjectControllerTest extends BaseTest {
     @Override
     protected void setUp() {
         this.projectController = new WorkProjectController(mockProjectService, mockUserService);
+    }
+
+    @Test
+    public void testIndexRedirect() {
+        final String expectedRedirect = RouteUtil.redirectString("/work/project/list");
+        final String actualRedirect = projectController.indexRedirect();
+
+        assertEquals(expectedRedirect, actualRedirect);
     }
 
     @Test
