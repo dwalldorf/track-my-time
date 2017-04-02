@@ -25,48 +25,23 @@
                 <ul class="nav nav-tabs" sec:authorize="isAuthenticated()">
                     <li role="presentation"
                         th:classappend="${#httpServletRequest.getRequestURI()=='/'||
-                        #httpServletRequest.getRequestURI()=='/home'?'active':''}">
-                        <a th:href="@{/home}"> Home </a>
+                        #httpServletRequest.getRequestURI()=='/work/list'?'active':''}">
+                        <a th:href="@{/work}">Work Log</a>
                     </li>
                     <li role="presentation"
-                        th:classappend="${#httpServletRequest.getRequestURI()=='/work/list'?'active':''}">
-                        <a th:href="@{/work/list}"> All Work Entries </a>
+                        th:classappend="${#httpServletRequest.getRequestURI().startsWith('/work/customer')||
+                        #httpServletRequest.getRequestURI()=='/work/customer'?'active':''}">
+                        <a th:href="@{/work/customer}">Customers</a>
                     </li>
                     <li role="presentation"
-                        th:classappend="${#httpServletRequest.getRequestURI()=='/work/add'||
-                            #httpServletRequest.getRequestURI()=='/work/customer/add'||
-                            #httpServletRequest.getRequestURI()=='/work/project/add'
-                            ?'active':''}">
-                        <a class="dropdown-toggle"
-                           data-toggle="dropdown"
-                           href="#"
-                           role="button"
-                           aria-haspopup="true"
-                           aria-expanded="false">
-                            Add <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li role="presentation"><a th:href="@{/work/add}">Work Entry</a></li>
-                            <li role="presentation"><a th:href="@{/work/customer/add}">Customer</a></li>
-                            <li role="presentation"><a th:href="@{/work/project/add}">Project</a></li>
-                        </ul>
+                        th:classappend="${#httpServletRequest.getRequestURI().startsWith('/work/project')||
+                        #httpServletRequest.getRequestURI()=='/work/project'?'active':''}">
+                        <a th:href="@{/work/project}">Projects</a>
                     </li>
                     <li role="presentation"
-                        th:classappend="${#httpServletRequest.getRequestURI()=='/work/customer/list' ||
-                        #httpServletRequest.getRequestURI()=='/work/project/list' ? 'active' : ''}">
-                        <a class="dropdown-toggle"
-                           data-toggle="dropdown"
-                           href="#"
-                           role="button"
-                           aria-haspopup="true"
-                           aria-expanded="false">
-                            Manage <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li role="presentation"><a th:href="@{/work/customer/list}">Customers</a></li>
-                            <li role="presentation"><a th:href="@{/work/project/list}">Projects</a></li>
-                            <li role="presentation"><a th:href="@{/user/edit}">My Profile</a></li>
-                        </ul>
+                        th:classappend="${#httpServletRequest.getRequestURI()=='/user/edit'||
+                        #httpServletRequest.getRequestURI()=='/work/project'?'active':''}">
+                        <a th:href="@{/user/edit}">My Profile</a>
                     </li>
                 </ul>
 

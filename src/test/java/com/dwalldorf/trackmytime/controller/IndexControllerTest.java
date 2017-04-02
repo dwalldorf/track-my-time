@@ -3,6 +3,7 @@ package com.dwalldorf.trackmytime.controller;
 import static org.junit.Assert.assertEquals;
 
 import com.dwalldorf.trackmytime.BaseTest;
+import com.dwalldorf.trackmytime.util.RouteUtil;
 import org.junit.Test;
 
 public class IndexControllerTest extends BaseTest {
@@ -15,18 +16,10 @@ public class IndexControllerTest extends BaseTest {
     }
 
     @Test
-    public void testIndex_ViewName() throws Exception {
-        final String expectedView = "/index";
-        final String actualView = indexController.index();
+    public void testIndex_Redirect() throws Exception {
+        final String expectedRedirect = RouteUtil.redirectString("/work/list");
+        final String actualRedirect = indexController.index();
 
-        assertEquals(expectedView, actualView);
-    }
-
-    @Test
-    public void testHome_SameViewAsIndex() throws Exception {
-        final String expectedView = indexController.index();
-        final String actualView = indexController.home();
-
-        assertEquals(expectedView, actualView);
+        assertEquals(expectedRedirect, actualRedirect);
     }
 }
