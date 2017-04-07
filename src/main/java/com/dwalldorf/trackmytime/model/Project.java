@@ -2,12 +2,14 @@ package com.dwalldorf.trackmytime.model;
 
 import java.io.Serializable;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.mongodb.morphia.annotations.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Project implements HasUserId, Serializable {
 
+    @Id
     private String id;
 
     @Indexed
